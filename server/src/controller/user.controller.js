@@ -848,6 +848,15 @@ export async function getUserForms(req, res) {
   }
 }
 
+export async function getAllUserForms(req, res) {
+  try {
+    const allUserFormsDataQuery = await getAllDataFromUserForms();
+    return sendResponse(res, 200, allUserFormsDataQuery);
+  } catch (err) {
+    sendResponse(res, 500, err);
+  }
+}
+
 // USERS
 export async function insertUsers(req, res) {
   const { error, value } = validateReq(insertUsersReq, req.body);
@@ -913,7 +922,14 @@ export async function getUsers(req, res) {
     sendResponse(res, 500, err);
   }
 }
-
+export async function getAllUsers(req, res) {
+  try {
+    const allUsersDataQuery = await getAllDataFromUsers();
+    return sendResponse(res, 200, allUsersDataQuery);
+  } catch (err) {
+    sendResponse(res, 500, err);
+  }
+}
 // EQUITY SALE PURCHASE
 export async function insertEquitySalePurchase(req, res) {
   const { error, value } = validateReq(insertEquitySalePurchaseReq, req.body);
@@ -1058,6 +1074,14 @@ export async function getYearMaster(req, res) {
       where: { id: value.id },
     });
     return sendResponse(res, 200, yearMasterDataQuery);
+  } catch (err) {
+    sendResponse(res, 500, err);
+  }
+}
+export async function getAllYearMaster(req, res) {
+  try {
+    const allYearMasterDataQuery = await getAllDataFromYearMaster();
+    return sendResponse(res, 200, allYearMasterDataQuery);
   } catch (err) {
     sendResponse(res, 500, err);
   }

@@ -85,79 +85,79 @@ const router = Router();
 // ACCOUNT MASTER
 router.post("/accountMaster", insertAccountMaster);
 router.patch("/accountMaster", updateAccountMaster);
-router.delete("/accountMaster", deleteAccountMaster);
+router.post("/accountMaster/delete", deleteAccountMaster);
 router.get("/accountMaster", getAccountMaster);
 
 // COMPANY
 router.post("/company", insertCompany);
 router.patch("/company", updateCompany);
-router.delete("/company", deleteCompany);
+router.post("/company/delete", deleteCompany);
 router.get("/company", getCompany);
 
 // EXPIRY MASTER
 router.post("/expiryMaster", insertExpiryMaster);
 router.patch("/expiryMaster", updateIntoExpiryMaster);
-router.delete("/expiryMaster", deleteExpiryMaster);
+router.post("/expiryMaster/delete", deleteExpiryMaster);
 router.get("/expiryMaster", getExpiryMaster);
 
 // GROUP MASTER
 router.post("/groupMaster", insertGroupMaster);
 router.patch("/groupMaster", updateGroupMaster);
-router.delete("/groupMaster", deleteGroupMaster);
+router.post("/groupMaster/delete", deleteGroupMaster);
 router.get("/groupMaster", getGroupMaster);
 
 // ITEM MASTER
 router.post("/itemMaster", insertItemMaster);
 router.patch("/itemMaster", updateItemMaster);
-router.delete("/itemMaster", deleteItemMaster);
+router.post("/itemMaster/delete", deleteItemMaster);
 router.get("/itemMaster", getItemMaster);
 
 // GST RATE MASTER
 router.post("/gstRateMaster", insertGstRateMaster);
 router.patch("/gstRateMaster", updateGstRateMaster);
-router.delete("/gstRateMaster", deleteGstRateMaster);
+router.post("/gstRateMaster/delete", deleteGstRateMaster);
 router.get("/gstRateMaster", getGstRateMaster);
 
 // SCRIPT MASTER
 router.post("/scriptMaster", insertScriptMaster);
 router.patch("/scriptMaster", updateScriptMaster);
-router.delete("/scriptMaster", deleteScriptMaster);
+router.post("/scriptMaster/delete", deleteScriptMaster);
 router.get("/scriptMaster", getScriptMaster);
 
 // STATE MASTER
 router.post("/stateMaster", insertStateMaster);
 router.patch("/stateMaster", updateStateMaster);
-router.delete("/stateMaster", deleteStateMaster);
+router.post("/stateMaster/delete", deleteStateMaster);
 router.get("/stateMaster", getStateMaster);
 
 // USER FORMS
 router.post("/userForms", insertUserForms);
 router.patch("/userForms", updateUserForms);
-router.delete("/userForms", deleteUserForms);
+router.post("/userForms/delete", deleteUserForms);
 router.get("/userForms", getUserForms);
 
 // USERS
 router.post("/users", insertUsers);
 router.patch("/users", updateUsers);
-router.delete("/users", deleteUsers);
+router.post("/users/delete", deleteUsers);
 router.get("/users", getUsers);
 
 // EQUITY SALE PURCHASE
 router.post("/equitySalePurchase", insertEquitySalePurchase);
 router.patch("/equitySalePurchase", updateEquitySalePurchase);
-router.delete("/equitySalePurchase", deleteEquitySalePurchase);
+router.post("/equitySalePurchase/delete", deleteEquitySalePurchase);
 router.get("/equitySalePurchase", getEquitySalePurchase);
 
 // YEAR MASTER
 router.post("/yearMaster", insertYearMaster);
 router.patch("/yearMaster", updateYearMaster);
-router.delete("/yearMaster", deleteYearMaster);
+router.post("/yearMaster/delete", deleteYearMaster);
 router.get("/yearMaster", getYearMaster);
 
 // TRANSACTION HEAD DETAILS
 router.post("/transactionHeadDetails", insertTransactionHeadDetails);
 router.patch("/transactionHeadDetails", updateTransactionHeadDetails);
-router.delete("/transactionHeadDetails", deleteTransactionHeadDetails);
+router.post("/transactionHeadDetails/delete", deleteTransactionHeadDetails);
 router.get("/transactionHeadDetails", getTransactionHeadDetails);
 
 export default router;

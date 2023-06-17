@@ -119,24 +119,21 @@ export const insertEquitySalePurchaseReq = Joi.object({
   scriptId: Joi.number().required(),
   purchaseId: Joi.number().optional(),
   quantity: Joi.number().required(),
-  bonus: Joi.number().required(),
+  bonus: Joi.number().optional(),
   value: Joi.number().required(),
   accountId: Joi.number().required(),
-  brokage: Joi.number().required(),
-  cess: Joi.number().required(),
-  stt: Joi.number().required(),
-  serviceTax: Joi.number().required(),
-  stampDuty: Joi.number().required(),
-  turnoverTax: Joi.number().required(),
+  brokage: Joi.number().optional(),
+  cess: Joi.number().optional(),
+  stt: Joi.number().optional(),
+  serviceTax: Joi.number().optional(),
+  stampDuty: Joi.number().optional(),
+  turnoverTax: Joi.number().optional(),
   netValue: Joi.number().required(),
   netRate: Joi.number().required(),
   companyCode: Joi.number().required(),
+  yearCode: Joi.number().required(),
   createdBy: Joi.number().required(),
   modifiedBy: Joi.number().optional(),
-});
-
-export const deleteEquitySalePurchaseReq = Joi.object({
-  id: Joi.number().required(),
 });
 
 export const getEquitySalePurchaseReq = Joi.object({
@@ -151,19 +148,24 @@ export const updateEquitySalePurchaseReq = Joi.object({
   scriptId: Joi.number().required(),
   purchaseId: Joi.number().optional(),
   quantity: Joi.number().required(),
-  bonus: Joi.number().required(),
+  bonus: Joi.number().optional(),
   value: Joi.number().required(),
   accountId: Joi.number().required(),
-  brokage: Joi.number().required(),
-  cess: Joi.number().required(),
-  stt: Joi.number().required(),
-  serviceTax: Joi.number().required(),
-  stampDuty: Joi.number().required(),
-  turnoverTax: Joi.number().required(),
+  brokage: Joi.number().optional(),
+  cess: Joi.number().optional(),
+  stt: Joi.number().optional(),
+  serviceTax: Joi.number().optional(),
+  stampDuty: Joi.number().optional(),
+  turnoverTax: Joi.number().optional(),
   netValue: Joi.number().required(),
   netRate: Joi.number().required(),
   companyCode: Joi.number().required(),
+  yearCode: Joi.number().required(),
   modifiedBy: Joi.number().required(),
+});
+
+export const deleteEquitySalePurchaseReq = Joi.object({
+  id: Joi.number().required(),
 });
 
 // Expiry Master
@@ -218,7 +220,6 @@ export const updateGroupMasterReq = Joi.object({
 // Gst Rate Master
 
 export const insertGstRateMasterReq = Joi.object({
-  gstCode: Joi.number().required(),
   gstName: Joi.string().required(),
   rate: Joi.number().required(),
   cGstRate: Joi.number().required(),
@@ -391,6 +392,7 @@ export const updateUserFormsReq = Joi.object({
 export const insertUsersReq = Joi.object({
   userName: Joi.string().required(),
   userId: Joi.string().required(),
+  userPassword: Joi.string().required(),
   emailAddress: Joi.string().optional(),
   emailPassword: Joi.string().optional(),
   mobileNo: Joi.string().optional(),
@@ -446,24 +448,24 @@ export const updateYearMasterReq = Joi.object({
 // TRANSACTION HEAD DETAILS
 export const insertTransactionHeadDetailsReq = Joi.object({
   head: Joi.object({
-    tran_type: Joi.string().valid("bp", "br", "cp", "cr").required(),
-    doc_no: Joi.number().optional(),
-    doc_date: Joi.date().optional(),
+    tranType: Joi.string().valid("bp", "br", "cp", "cr").required(),
+    docNo: Joi.number().optional(),
+    docDate: Joi.date().optional(),
     cashbank: Joi.number().optional(),
     total: Joi.string().optional(),
     ode: Joi.number().optional(),
-    year_code: Joi.number().optional(),
-    company_code: Joi.number().required(),
+    yearCode: Joi.number().optional(),
+    companyCode: Joi.number().required(),
     cb: Joi.number().required(),
-    created_by: Joi.number().required(),
-    modified_by: Joi.number().optional(),
+    createdBy: Joi.number().required(),
+    modifiedBy: Joi.number().optional(),
   }),
   details: Joi.array()
     .items(
       Joi.object({
-        details_id: Joi.number().optional(),
-        debit_ac: Joi.number().optional(),
-        credit_ac: Joi.number().optional(),
+        detailsId: Joi.number().optional(),
+        debitAc: Joi.number().optional(),
+        creditAc: Joi.number().optional(),
         amount: Joi.number().optional(),
         narration: Joi.string().optional(),
         drcr: Joi.string().valid("D", "C").optional(),
@@ -472,7 +474,6 @@ export const insertTransactionHeadDetailsReq = Joi.object({
       })
     )
     .min(1),
-  // .required(),
 });
 
 export const getTransactionHeadDetailsReq = Joi.object({
@@ -484,16 +485,16 @@ export const getTransactionHeadDetailsReq = Joi.object({
 export const updateTransactionHeadDetailsReq = Joi.object({
   head: Joi.object({
     id: Joi.array().items(Joi.number().required()).required(),
-    tran_type: Joi.string().valid("bp", "br", "cp", "cr").required(),
-    doc_no: Joi.number().optional(),
-    doc_date: Joi.date().optional(),
+    tranType: Joi.string().valid("bp", "br", "cp", "cr").required(),
+    docNo: Joi.number().optional(),
+    docDate: Joi.date().optional(),
     cashbank: Joi.number().optional(),
     total: Joi.string().optional(),
     ode: Joi.number().optional(),
-    year_code: Joi.number().optional(),
-    company_code: Joi.number().required(),
+    yearCode: Joi.number().optional(),
+    companyCode: Joi.number().required(),
     cb: Joi.number().required(),
-    modified_by: Joi.number().required(),
+    modifiedBy: Joi.number().required(),
   }),
   details: Joi.object({
     delete: Joi.object({
@@ -501,10 +502,10 @@ export const updateTransactionHeadDetailsReq = Joi.object({
     }),
     insert: Joi.array().items(
       Joi.object({
-        tran_id: Joi.number().required(),
-        details_id: Joi.number().optional(),
-        debit_ac: Joi.number().optional(),
-        credit_ac: Joi.number().optional(),
+        tranId: Joi.number().required(),
+        detailsId: Joi.number().optional(),
+        debitAc: Joi.number().optional(),
+        creditAc: Joi.number().optional(),
         amount: Joi.number().optional(),
         narration: Joi.string().optional(),
         drcr: Joi.string().valid("D", "C").optional(),
@@ -515,9 +516,9 @@ export const updateTransactionHeadDetailsReq = Joi.object({
     update: Joi.array().items(
       Joi.object({
         id: Joi.number().required(),
-        details_id: Joi.number().optional(),
-        debit_ac: Joi.number().optional(),
-        credit_ac: Joi.number().optional(),
+        detailsId: Joi.number().optional(),
+        debitAc: Joi.number().optional(),
+        creditAc: Joi.number().optional(),
         amount: Joi.number().optional(),
         narration: Joi.string().optional(),
         drcr: Joi.string().valid("D", "C").optional(),
@@ -533,4 +534,3 @@ export const deleteTransactionHeadDetailsReq = Joi.object({
     id: Joi.array().items(Joi.number().required()),
   }),
 });
-

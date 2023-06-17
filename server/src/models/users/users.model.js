@@ -17,6 +17,9 @@ export const users = mssql.define(USERS, {
     type: DataTypes.STRING(25),
     allowNull: false,
   },
+  userPassword: {
+    type: DataTypes.STRING(15),
+  },
   emailAddress: {
     type: DataTypes.STRING(25),
     allowNull: true,

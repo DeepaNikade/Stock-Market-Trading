@@ -9,10 +9,7 @@ export const gstRateMaster = mssql.define(GST_RATE_MASTER, {
     primaryKey: true,
     autoIncrement: true,
   },
-  gstCode: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
+  
   gstName: {
     type: DataTypes.STRING(25),
     allowNull: false,
