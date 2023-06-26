@@ -20,7 +20,7 @@ export async function updateIntoEquitySalePurchase(set, query = { where: {} }) {
 }
 
 export async function getDataFromEquitySalePurchase(query = { where: {} }) {
-  let output = await equitySalePurchase.findAll(query);
+  let output = await equitySalePurchase.findOne(query);
   return processQueryOutput.forFindAll(output);
 }
 export async function getAllDataFromEquitySalePurchase(query = { where: {} }) {

@@ -15,10 +15,14 @@ import {
 import { useColors } from "../../hooks/use-colors";
 import CustomIconButton from "../../components/Buttons/CustomIconButton";
 import CompanyRecords from "./CompanyRecords";
-import MenuBar from "../menu/menuBar"
+import MenuBar from "../menu/menuBar";
+import { useIds } from "../IdsContext/IdsContext";
+import { getAccountMasterData } from "../../api/accountMaster/accountMaster.request";
+import { getGroupMasterData } from "../../api/groupMaster/groupMaster.request";
 
+const Company = ({ data }) => {
+  const { ids, setIds } = useIds();
 
-const Company = ({ data ,companyid }) => {
   const [companyData, setCompanyData] = useState({
     companyName: "",
     city: "",
@@ -28,7 +32,7 @@ const Company = ({ data ,companyid }) => {
     panNo: "",
     createdBy: null,
     modifiedBy: null,
-    fssiNo: "",
+    fssaiNo: "",
     signPath: "",
     logoPath: "",
     stateCode: "",
@@ -63,7 +67,7 @@ const Company = ({ data ,companyid }) => {
       panNo: "",
       createdBy: null,
       modifiedBy: null,
-      fssiNo: "",
+      fssaiNo: "",
       signPath: "",
       logoPath: "",
       stateCode: "",
@@ -73,7 +77,9 @@ const Company = ({ data ,companyid }) => {
   const insertCompanyMutation = useInsertIntoCompanyData();
 
   function handleInsertCompanyData() {
-    insertCompanyMutation.mutate(companyData);
+    insertCompanyMutation.mutate({ 
+      ...companyData,
+       createdBy: ids.userId, });
     setIsDisabled(isDisabled);
     setManageButton({
       create: false,
@@ -85,29 +91,87 @@ const Company = ({ data ,companyid }) => {
     });
   }
   const updateCompanyMutation = useUpdateIntoCompanyData();
+console.log("updcopmut : ",updateCompanyMutation)
 
   function handleUpdateCompanyData() {
-    updateCompanyMutation.mutate(companyData);
-  }
+    const updatedCompanyData ={
+      
+        id : companyData.id,
+        companyName:companyData.companyName,
+        city:companyData.city,
+        state:companyData.state,
+        stateCode:companyData.stateCode,
+        modifiedBy: companyData.modifiedBy
+      
+    }
+    updateCompanyMutation.mutate(updatedCompanyData);
+      
+    }
+    
+    
   const deleteCompanyMutation = useDeleteIntoCompanyData();
 
-  function handleDeleteCompanyData() {
-    deleteCompanyMutation.mutate({ id: companyId });
-    setCompanyId(null);
-    setCompanyData({
-      companyName: "",
-      city: "",
-      state: "",
-      mobile: "",
-      gstNo: "",
-      panNo: "",
-      createdBy: null,
-      modifiedBy: null,
-      fssiNo: "",
-      signPath: "",
-      logoPath: "",
-      stateCode: "",
-    });
+  async function checkIfCompanyInUse(companyId) {
+    try {
+      const accountMasterData = await getAccountMasterData(companyId);
+      console.log("accountMasterData", accountMasterData);
+      return accountMasterData.length > 0;
+    } catch (error) {
+      console.error("Failed to fetch accountMaster data:", error);
+      return false;
+    }
+  }
+
+  async function checkIfCompanyInUseInGroupMaster(companyId) {
+    try {
+      const groupMasterData = await getGroupMasterData(companyId);
+      console.log("groupMasterData", groupMasterData);
+      return groupMasterData.length > 0;
+    } catch (error) {
+      console.error("Failed to fetch groupMaster data:", error);
+      return false;
+    }
+  }
+
+  async function handleDeleteCompanyData() {
+    try {
+      const isCompanyInUse = checkIfCompanyInUse(companyId);
+      console.log("isCompanyInUse", isCompanyInUse);
+
+      if (isCompanyInUse) {
+        alert(
+          "Cannot delete the company. It is associated with accountMaster."
+        );
+        return;
+      }
+
+      const isCompanyInUseInGroupMaster =checkIfCompanyInUseInGroupMaster(companyId);
+      console.log("isCompanyInUseInGroupMaster", isCompanyInUseInGroupMaster);
+
+      if (isCompanyInUseInGroupMaster) {
+        alert("Cannot delete the company. It is associated with groupMaster.");
+        return;
+      }
+
+      await deleteCompanyMutation.mutateAsync({ id: companyId });
+      setCompanyId(null);
+      setCompanyData({
+        companyName: "",
+        city: "",
+        state: "",
+        mobile: "",
+        gstNo: "",
+        panNo: "",
+        createdBy: null,
+        modifiedBy: null,
+        fssaiNo: "",
+        signPath: "",
+        logoPath: "",
+        stateCode: "",
+      });
+    } catch (error) {
+      console.error("Failed to delete company:", error);
+    }
   }
 
   const [manageButton, setManageButton] = useState({
@@ -127,7 +191,7 @@ const Company = ({ data ,companyid }) => {
         <CompanyRecords />
       ) : (
         <>
-          <MenuBar/>
+          <MenuBar />
           <Box
             sx={{
               bgcolor: colors.bgColor,
@@ -137,7 +201,7 @@ const Company = ({ data ,companyid }) => {
               display: "flex",
               flexDirection: "column",
               gap: 2,
-              mt:18
+              mt: 18,
             }}
           >
             <Box
@@ -201,7 +265,7 @@ const Company = ({ data ,companyid }) => {
                     variant="outlined"
                     onChange={handleInputData}
                     name="companyName"
-                    value={companyData.companyName}
+                    value={companyData.companyName || ""}
                     fullWidth
                     required
                     autoFocus
@@ -253,7 +317,7 @@ const Company = ({ data ,companyid }) => {
                     variant="outlined"
                     onChange={handleInputData}
                     name="stateCode"
-                    value={companyData.stateCode}
+                    value={companyData.stateCode || ""}
                     fullWidth
                     required
                   />
@@ -284,13 +348,13 @@ const Company = ({ data ,companyid }) => {
                 </Grid>
                 <Grid xs={12} sm={4} item>
                   <TextField
-                    placeholder="Enter fssi Number"
-                    label="fssi Number"
+                    placeholder="Enter fssai Number"
+                    label="fssai Number"
                     disabled={isDisabled}
                     variant="outlined"
                     onChange={handleInputData}
-                    name="fssiNumber"
-                    value={companyData.fssiNo || ""}
+                    name="fssaiNumber"
+                    value={companyData.fssaiNo || ""}
                     fullWidth
                   />
                 </Grid>

@@ -1,5 +1,15 @@
 import { React, useState } from "react";
-import { Grid, TextField, Button, Typography, Box } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Select,
+} from "@mui/material";
 import {
   ArrowBack,
   KeyboardArrowLeft,
@@ -8,101 +18,92 @@ import {
   KeyboardDoubleArrowRight,
 } from "@mui/icons-material";
 import {
-  useInsertIntoStateMasterData,
-  useUpdateIntoStateMasterData,
-  useDeleteIntoStateMasterData,
-} from "../../hooks/stateMaster/stateMaster.mutation";
+  useInsertIntoGroupMasterData,
+  useUpdateIntoGroupMasterData,
+  useDeleteIntoGroupMasterData,
+} from "../../hooks/groupMaster/groupMaster.mutation";
 import { useColors } from "../../hooks/use-colors";
 import CustomIconButton from "../../components/Buttons/CustomIconButton";
-import StateMasterRecords from "./stateMasterRecords";
+import GroupMasterRecords from "./groupMasterRecords";
 import MenuBar from "../menu/menuBar";
 import { useIds } from "../IdsContext/IdsContext";
 
-const StateMasterForm = (data) => {
+const GroupMasterForm = ({data}) => {
   const { ids } = useIds();
-  const [stateMasterData, setStateMasterData] = useState({
-    id: "",
-    cityName: "",
-    pinCode: "",
-    subArea: "",
-    state: "",
-    stateCode: "",
+  const [groupMasterData, setGroupMasterData] = useState({
+    groupName: "",
+    groupType: "",
+    groupOrder: "",
     companyCode: "",
     createdBy: null,
     modifiedBy: null,
   });
 
-  const [stateMasterId, setStateMasterId] = useState(null);
+  const [groupMasterId, setGroupMasterId] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [redirectToStateMasterRecords, setRedirectToStateMasterRecords] =
+  const [redirectToGroupMasterRecords, setRedirectToGroupMasterRecords] =
     useState(false);
 
   const handleInputData = (e) => {
-    setStateMasterData({ ...stateMasterData, [e.target.name]: e.target.value });
+    setGroupMasterData({ ...groupMasterData, [e.target.name]: e.target.value });
   };
 
-  const handleStateMasterRecordsData = () => {
-    setStateMasterData(data.data);
-    setStateMasterId(data.data.id);
+  const handleGroupMasterRecordsData = () => {
+    setGroupMasterData(data);
+    setGroupMasterId(data.id);
   };
 
   const handleClick = () => {
-    setRedirectToStateMasterRecords(true);
+    setRedirectToGroupMasterRecords(true);
   };
 
   const handleClear = () => {
-    setStateMasterId(null);
-    setStateMasterData({
-      id: "",
-      cityName: "",
-      pinCode: "",
-      subArea: "",
-      state: "",
-      stateCode: "",
+    setGroupMasterId(null);
+    setGroupMasterData({
+      groupName: "",
+      groupType: "",
+      groupOrder: "",
       companyCode: "",
       createdBy: null,
       modifiedBy: null,
     });
   };
 
-  const insertStateMasterMutation = useInsertIntoStateMasterData();
+  const insertGroupMasterMutation = useInsertIntoGroupMasterData();
 
-  function handleInsertStateMasterData() {
-     
-    const insertStateMasterData = {
-      cityName: stateMasterData.cityName ,
-      stateCode: stateMasterData.stateCode,
+  function handleInsertGroupMasterData() {
+    insertGroupMasterMutation.mutate({
+      ...groupMasterData,
       companyCode: ids.companyId,
-      createdBy: ids.userId
-    }
-
-    insertStateMasterMutation.mutate(insertStateMasterData);
+      createdBy: ids.userId,
+    });
   }
-  const updateStateMasterMutation = useUpdateIntoStateMasterData();
+  const updateGroupMasterMutation = useUpdateIntoGroupMasterData();
 
-  function handleUpdateStateMasterData() {
-    updateStateMasterMutation.mutate(stateMasterData);
-    const updateStateMasterData = {
-      id:stateMasterData.id ,
-      cityName:stateMasterData.cityName ,
-      stateCode: stateMasterData.stateCode,
-      companyCode: stateMasterData.companyCode,
-      modifiedBy:stateMasterData.modifiedBy
+  function handleUpdateGroupMasterData() {
+    const updateGroupMasterData = {
+     
+         id: groupMasterData.id,
+         groupName: groupMasterData.groupName,
+         groupType: groupMasterData.groupType,
+         groupOrder: groupMasterData.groupOrder,
+         companyCode: groupMasterData.companyCode,
+         modifiedBy: groupMasterData.modifiedBy,
+   
+    
     }
-    updateStateMasterMutation.mutate(updateStateMasterData);
-  }
-  const deleteStateMasterMutation = useDeleteIntoStateMasterData();
+    updateGroupMasterMutation.mutate(updateGroupMasterData);
 
-  function handleDeleteStateMasterData() {
-    deleteStateMasterMutation.mutate({ id: stateMasterId });
-    setStateMasterId(null);
-    setStateMasterData({
-      id: "",
-      cityName: "",
-      pinCode: "",
-      subArea: "",
-      state: "",
-      stateCode: "",
+  }
+  const deleteGroupMasterMutation = useDeleteIntoGroupMasterData();
+
+  function handleDeleteGroupMasterData() {
+    deleteGroupMasterMutation.mutate({ id: groupMasterId });
+    setGroupMasterId(null);
+    setGroupMasterData({
+      groupName: "",
+      groupType: "",
+      groupOrder: "",
       companyCode: "",
       createdBy: null,
       modifiedBy: null,
@@ -122,8 +123,8 @@ const StateMasterForm = (data) => {
 
   return (
     <>
-      {redirectToStateMasterRecords ? (
-        <StateMasterRecords />
+      {redirectToGroupMasterRecords ? (
+        <GroupMasterRecords />
       ) : (
         <>
           <MenuBar />
@@ -152,7 +153,7 @@ const StateMasterForm = (data) => {
                 onClick={() => {
                   handleClick();
                 }}
-                description={"Go Back To StateMaster Records"}
+                description={"Go Back To GroupMaster Records"}
               >
                 <ArrowBack />
               </CustomIconButton>
@@ -167,7 +168,7 @@ const StateMasterForm = (data) => {
                 }}
                 variant="h5"
               >
-                StateMaster Form
+                GroupMaster Form
               </Typography>
             </Box>
 
@@ -182,11 +183,12 @@ const StateMasterForm = (data) => {
               <Grid container spacing={3}>
                 <Grid xs={12} sm={4} item>
                   <TextField
-                    placeholder="Enter State Master Id"
-                    label="State Id"
+                    placeholder="Enter Group Id"
+                    label="Group Id"
                     disabled
                     variant="outlined"
-                    value={stateMasterId || ""}
+                    value={groupMasterId ?? ""}
+                    //  InputLabelProps={{ shrink: length > 0 ? true : false }}
                     fullWidth
                     required
                   />
@@ -194,107 +196,51 @@ const StateMasterForm = (data) => {
 
                 <Grid xs={12} sm={4} item>
                   <TextField
-                    placeholder="Enter City Name"
-                    label="City Name"
+                    placeholder="Enter Group Name"
+                    label="Group Name"
                     disabled={isDisabled}
                     variant="outlined"
                     onChange={handleInputData}
-                    name="cityName"
-                    value={stateMasterData.cityName}
+                    name="groupName"
+                    value={groupMasterData.groupName}
                     fullWidth
                     required
                   />
                 </Grid>
                 <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter Pincode"
-                    label="Pincode"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="pinCode"
-                    value={stateMasterData.pinCode || ""}
-                    fullWidth
-                  />
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel id="groupType-label">Group Type</InputLabel>
+                    <Select
+                      labelId="groupType-label"
+                      id="groupType"
+                      label="Group Type"
+                      disabled={isDisabled}
+                      variant="outlined"
+                      onChange={handleInputData}
+                      name="groupType"
+                      value={groupMasterData.groupType || ""}
+                    >
+                      <MenuItem value="">Select Group Type</MenuItem>
+                      <MenuItem value="B">B</MenuItem>
+                      <MenuItem value="P">P</MenuItem>
+                      <MenuItem value="T">T</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <Grid xs={12} sm={4} item>
                   <TextField
-                    placeholder="Enter Sub Area"
-                    label="Sub Area"
+                    placeholder="Enter Group Order"
+                    label="Group Order"
                     disabled={isDisabled}
                     variant="outlined"
                     onChange={handleInputData}
-                    name="subArea"
-                    value={stateMasterData.subArea || ""}
-                    fullWidth
-                    
-                  />
-                </Grid>
-                <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter State"
-                    label="State"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="state"
-                    value={stateMasterData.state || ""}
-                    fullWidth
-                    
-                  />
-                </Grid>
-                <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter State Code"
-                    label="State Code"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="stateCode"
-                    value={stateMasterData.stateCode || ""}
+                    name="groupOrder"
+                    value={groupMasterData.groupOrder ?? ""}
+                    //InputLabelProps={{ shrink: length > 0 ? true : false }}
                     fullWidth
                     required
                   />
                 </Grid>
-                {/* <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter Company Code"
-                    label="Company Code"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="companyCode"
-                    value={stateMasterData.companyCode || ""}
-                    fullWidth
-                    required
-                  />
-                </Grid> */}
-                {/* <Grid xs={12} sm={4} item>
-      <TextField
-        placeholder="Enter createdBy"
-        label="CreatedBy"
-        for="createdBy"
-        disabled={isDisabled}
-        variant="outlined"
-        onChange={handleInputData}
-        name="createdBy"
-        value={companyData.createdBy || ""}
-        fullWidth
-        required
-      />
-    </Grid>
-    <Grid xs={12} sm={4} item>
-      <TextField
-        placeholder="Enter modifiedBy"
-        label="ModifiedBy"
-        disabled={isDisabled}
-        variant="outlined"
-        onChange={handleInputData}
-        name="modifiedBy"
-        value={companyData.modifiedBy || ""}
-        fullWidth
-      />
-    </Grid> */}
               </Grid>
             </Box>
 
@@ -330,7 +276,7 @@ const StateMasterForm = (data) => {
                 <Button
                   disabled={manageButton.save}
                   onClick={() => {
-                    handleInsertStateMasterData();
+                    handleInsertGroupMasterData();
                     setIsDisabled(!isDisabled);
                   }}
                   color="green"
@@ -343,7 +289,7 @@ const StateMasterForm = (data) => {
                   disabled={manageButton.edit}
                   onClick={() => {
                     setIsDisabled(!isDisabled);
-                    handleStateMasterRecordsData();
+                    handleGroupMasterRecordsData();
                     setManageButton({
                       create: true,
                       save: true,
@@ -363,7 +309,7 @@ const StateMasterForm = (data) => {
                 <Button
                   disabled={manageButton.update}
                   onClick={() => {
-                    handleUpdateStateMasterData();
+                    handleUpdateGroupMasterData();
                   }}
                   color="violet"
                   variant="contained"
@@ -375,7 +321,7 @@ const StateMasterForm = (data) => {
                   disabled={manageButton.delete}
                   onClick={() => {
                     setIsDisabled(isDisabled);
-                    handleDeleteStateMasterData();
+                    handleDeleteGroupMasterData();
                   }}
                   color="red"
                   variant="contained"
@@ -441,4 +387,4 @@ const StateMasterForm = (data) => {
   );
 };
 
-export default StateMasterForm;
+export default GroupMasterForm;

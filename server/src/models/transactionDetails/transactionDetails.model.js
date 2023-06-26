@@ -8,21 +8,17 @@ export const transactionDetails = mssql.define(TRANSACTION_DETAILS, {
     primaryKey: true,
     autoIncrement: true,
   },
-  tran_id: {
+  tranId: {
     type: DataTypes.INTEGER,
-    field: "tranId",
   },
-  details_id: {
+  detailsId: {
     type: DataTypes.INTEGER,
-    field: "detailsId",
   },
-  debit_ac: {
+  debitAc: {
     type: DataTypes.INTEGER,
-    field: "debitAc",
   },
-  credit_ac: {
+  creditAc: {
     type: DataTypes.INTEGER,
-    field: "creditAc",
   },
   amount: {
     type: DataTypes.DECIMAL(18, 2),
@@ -38,5 +34,5 @@ export const transactionDetails = mssql.define(TRANSACTION_DETAILS, {
   },
   ca: {
     type: DataTypes.INTEGER,
-  },
+  },
 });

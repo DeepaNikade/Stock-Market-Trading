@@ -9,50 +9,58 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import { getAllStateMasterData } from "../../api/stateMaster/stateMaster.request";
-import StateMasterForm from "../../pages/stateMaster/stateMasterForm";
-import CustomIconButton from "../../components/customIconButton";
+import { getAllGroupMasterData } from "../../api/groupMaster/groupMaster.request";
+import GroupMasterForm from "./groupMasterForm";
+import CustomIconButton from "../../components/Buttons/CustomIconButton";
 import { Search } from "@mui/icons-material";
+import { useIds } from "../IdsContext/IdsContext";
 
-const StateMasterRecords = () => {
-  const [stateMasterData, setStateMasterData] = useState([]);
+const GroupMasterRecords = () => {
+  const { ids, setIds } = useIds();
+
+  const [groupMasterData, setGroupMasterData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [redirectToStateMasterForm, setRedirectToStateMasterForm] =
+  const [redirectToGroupMasterForm, setRedirectToGroupMasterForm] =
     useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
   useEffect(() => {
-    const fetchStateMasterData = async () => {
+    const fetchGroupMasterData = async () => {
       try {
-        const response = await getAllStateMasterData();
-        setStateMasterData(response.data);
+        const response = await getAllGroupMasterData();
+        setGroupMasterData(response.data);
       } catch (error) {
-        console.error("Failed to fetch State data:", error);
+        console.error("Failed to fetch group data:", error);
       }
     };
-    fetchStateMasterData();
+    fetchGroupMasterData();
   }, []);
 
   const handleSearch = () => {
     if (searchQuery) {
-      const filteredData = stateMasterData.filter((data) =>
-        data.cityName.toLowerCase().includes(searchQuery.toLowerCase())
+      const filteredData = groupMasterData.filter((data) =>
+        data.groupName.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setstateData(filteredData);
+      setGroupMasterData(filteredData);
     } else {
-      setstateData(stateMasterData);
+      setGroupMasterData(groupMasterData);
     }
   };
 
-  const handleClick = (e) => {
-    console.log(e);
-    setRedirectToStateMasterForm(true);
-    setSelectedData(e);
-    //console.log(setSelectedData(data));
+  const handleClick = (group) => {
+    console.log(group.id);
+    const groupMasterId = group.id;
+    setIds((prev) => ({ ...prev, groupMasterId }));
+    setRedirectToGroupMasterForm(true);
+    setSelectedData(group);
   };
 
-  if (redirectToStateMasterForm) {
-    return <StateMasterForm data={selectedData} />;
+  const handleAddClick = () => {
+    setRedirectToGroupMasterForm(true);
+  };
+
+  if (redirectToGroupMasterForm) {
+    return <GroupMasterForm data={selectedData} />;
   }
   return (
     <Box
@@ -72,7 +80,7 @@ const StateMasterRecords = () => {
         }}
         variant="h4"
       >
-        StateMaster Records
+        GroupMaster Records
       </Typography>
       <Box
         sx={{
@@ -91,7 +99,7 @@ const StateMasterRecords = () => {
           <Button
             sx={{ color: "black", bgcolor: "grey" }}
             onClick={() => {
-              handleClick();
+              handleAddClick();
             }}
           >
             Add Data
@@ -108,7 +116,7 @@ const StateMasterRecords = () => {
           <TextField
             id="search-bar"
             className="text"
-            label="Enter a Company name"
+            label="Enter a Group name"
             variant="outlined"
             placeholder="Search..."
             value={searchQuery}
@@ -131,19 +139,17 @@ const StateMasterRecords = () => {
         <TableHead>
           <TableRow>
             <TableCell style={{ fontWeight: "bold" }}>id</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>cityName</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>pincode</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>state</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>subArea</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>groupName</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>groupType</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>groupOrder</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>companyCode</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>state</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>createdBy</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>modifiedBy</TableCell>
           </TableRow>
         </TableHead>
 
         <tbody>
-          {stateMasterData.map((data) => (
+          {groupMasterData.map((data) => (
             <TableRow
               key={data.id}
               onClick={() => {
@@ -152,22 +158,18 @@ const StateMasterRecords = () => {
               sx={{ cursor: "pointer" }}
             >
               <TableCell>{data.id}</TableCell>
-              <TableCell>{data.cityName}</TableCell>
-              <TableCell>{data.pincode}</TableCell>
-              <TableCell>{data.subArea}</TableCell>
-              <TableCell>{data.state}</TableCell>
+              <TableCell>{data.groupName}</TableCell>
+              <TableCell>{data.groupType}</TableCell>
+              <TableCell>{data.groupOrder}</TableCell>
               <TableCell>{data.companyCode}</TableCell>
-              <TableCell>{data.state}</TableCell>
               <TableCell>{data.createdBy}</TableCell>
               <TableCell>{data.modifiedBy}</TableCell>
             </TableRow>
           ))}
         </tbody>
       </Table>
-
-      {/* {redirectTostateForm && <stateForm />} */}
     </Box>
   );
 };
 
-export default StateMasterRecords;
+export default GroupMasterRecords;

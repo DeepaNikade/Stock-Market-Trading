@@ -1,5 +1,20 @@
 import { React, useState } from "react";
-import { Grid, TextField, Button, Typography, Box } from "@mui/material";
+import { DatePicker } from '@mui/lab';
+
+
+
+
+import {
+  Grid,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Select,
+} from "@mui/material";
 import {
   ArrowBack,
   KeyboardArrowLeft,
@@ -8,104 +23,76 @@ import {
   KeyboardDoubleArrowRight,
 } from "@mui/icons-material";
 import {
-  useInsertIntoStateMasterData,
-  useUpdateIntoStateMasterData,
-  useDeleteIntoStateMasterData,
-} from "../../hooks/stateMaster/stateMaster.mutation";
+  useInsertIntoExpiryMasterData,
+  useUpdateIntoExpiryMasterData,
+  useDeleteIntoExpiryMasterData,
+} from "../../hooks/expiryMaster/expiryMaster.mutation";
 import { useColors } from "../../hooks/use-colors";
 import CustomIconButton from "../../components/Buttons/CustomIconButton";
-import StateMasterRecords from "./stateMasterRecords";
+import ExpiryMasterRecords from "./expiryMasterRecords";
 import MenuBar from "../menu/menuBar";
 import { useIds } from "../IdsContext/IdsContext";
 
-const StateMasterForm = (data) => {
+const ExpiryMasterForm = ({ data }) => {
   const { ids } = useIds();
-  const [stateMasterData, setStateMasterData] = useState({
+  const [expiryMasterData, setExpiryMasterData] = useState({
     id: "",
-    cityName: "",
-    pinCode: "",
-    subArea: "",
-    state: "",
-    stateCode: "",
-    companyCode: "",
-    createdBy: null,
-    modifiedBy: null,
+    expiryDate: "",
   });
 
-  const [stateMasterId, setStateMasterId] = useState(null);
+  const [expiryMasterId, setexpiryMasterId] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [redirectToStateMasterRecords, setRedirectToStateMasterRecords] =
+  const [redirectToExpiryMasterRecords, setRedirectToExpiryMasterRecords] =
     useState(false);
 
   const handleInputData = (e) => {
-    setStateMasterData({ ...stateMasterData, [e.target.name]: e.target.value });
-  };
-
-  const handleStateMasterRecordsData = () => {
-    setStateMasterData(data.data);
-    setStateMasterId(data.data.id);
-  };
-
-  const handleClick = () => {
-    setRedirectToStateMasterRecords(true);
-  };
-
-  const handleClear = () => {
-    setStateMasterId(null);
-    setStateMasterData({
-      id: "",
-      cityName: "",
-      pinCode: "",
-      subArea: "",
-      state: "",
-      stateCode: "",
-      companyCode: "",
-      createdBy: null,
-      modifiedBy: null,
+    setExpiryMasterData({
+      ...expiryMasterData,
+      [e.target.name]: e.target.value,
     });
   };
 
-  const insertStateMasterMutation = useInsertIntoStateMasterData();
+  const handleExpiryMasterRecordsData = () => {
+    setExpiryMasterData(data);
+    setexpiryMasterId(data.id);
+  };
 
-  function handleInsertStateMasterData() {
-     
-    const insertStateMasterData = {
-      cityName: stateMasterData.cityName ,
-      stateCode: stateMasterData.stateCode,
-      companyCode: ids.companyId,
-      createdBy: ids.userId
-    }
+  const handleClick = () => {
+    setRedirectToExpiryMasterRecords(true);
+  };
 
-    insertStateMasterMutation.mutate(insertStateMasterData);
-  }
-  const updateStateMasterMutation = useUpdateIntoStateMasterData();
-
-  function handleUpdateStateMasterData() {
-    updateStateMasterMutation.mutate(stateMasterData);
-    const updateStateMasterData = {
-      id:stateMasterData.id ,
-      cityName:stateMasterData.cityName ,
-      stateCode: stateMasterData.stateCode,
-      companyCode: stateMasterData.companyCode,
-      modifiedBy:stateMasterData.modifiedBy
-    }
-    updateStateMasterMutation.mutate(updateStateMasterData);
-  }
-  const deleteStateMasterMutation = useDeleteIntoStateMasterData();
-
-  function handleDeleteStateMasterData() {
-    deleteStateMasterMutation.mutate({ id: stateMasterId });
-    setStateMasterId(null);
-    setStateMasterData({
+  const handleClear = () => {
+    setexpiryMasterId(null);
+    setExpiryMasterData({
       id: "",
-      cityName: "",
-      pinCode: "",
-      subArea: "",
-      state: "",
-      stateCode: "",
-      companyCode: "",
-      createdBy: null,
-      modifiedBy: null,
+      expiryDate: "",
+    });
+  };
+
+  const insertExpiryMasterMutation = useInsertIntoExpiryMasterData();
+
+  function handleInsertExpiryMasterData() {
+    insertExpiryMasterMutation.mutate({
+      ...expiryMasterData,
+    });
+  }
+  const updateExpiryMasterMutation = useUpdateIntoExpiryMasterData();
+
+  function handleUpdateExpiryMasterData() {
+    const updateExpiryMasterData = {
+      id: expiryMasterData.id,
+      expiryDate: expiryMasterData.expiryDate,
+    };
+    updateExpiryMasterMutation.mutate(updateExpiryMasterData);
+  }
+  const deleteExpiryMasterMutation = useDeleteIntoExpiryMasterData();
+
+  function handleDeleteExpiryMasterData() {
+    deleteExpiryMasterMutation.mutate({ id: expiryMasterId });
+    setexpiryMasterId(null);
+    setExpiryMasterData({
+      id: "",
+      expiryDate: "",
     });
   }
 
@@ -119,11 +106,15 @@ const StateMasterForm = (data) => {
   });
 
   const colors = useColors();
-
+  const [selectedDate, setSelectedDate] = useState(null);
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    console.log("date",date);
+  };
   return (
     <>
-      {redirectToStateMasterRecords ? (
-        <StateMasterRecords />
+      {redirectToExpiryMasterRecords ? (
+        <ExpiryMasterRecords />
       ) : (
         <>
           <MenuBar />
@@ -152,7 +143,7 @@ const StateMasterForm = (data) => {
                 onClick={() => {
                   handleClick();
                 }}
-                description={"Go Back To StateMaster Records"}
+                description={"Go Back To ExpiryMaster Records"}
               >
                 <ArrowBack />
               </CustomIconButton>
@@ -167,7 +158,7 @@ const StateMasterForm = (data) => {
                 }}
                 variant="h5"
               >
-                StateMaster Form
+                ExpiryMaster Form
               </Typography>
             </Box>
 
@@ -182,119 +173,36 @@ const StateMasterForm = (data) => {
               <Grid container spacing={3}>
                 <Grid xs={12} sm={4} item>
                   <TextField
-                    placeholder="Enter State Master Id"
-                    label="State Id"
+                    placeholder="Enter Expiry Id"
+                    label="Expiry Id"
                     disabled
                     variant="outlined"
-                    value={stateMasterId || ""}
+                    value={expiryMasterId ?? ""}
+                    //  InputLabelProps={{ shrink: length > 0 ? true : false }}
                     fullWidth
                     required
                   />
                 </Grid>
 
                 <Grid xs={12} sm={4} item>
+                  <DatePicker
+                    label="Select Date"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
                   <TextField
-                    placeholder="Enter City Name"
-                    label="City Name"
+                    placeholder="Enter Expiry Date"
+                    label="Expiry Date"
                     disabled={isDisabled}
                     variant="outlined"
                     onChange={handleInputData}
-                    name="cityName"
-                    value={stateMasterData.cityName}
+                    name="expiryDate"
+                    value={expiryMasterData.expiryDate}
                     fullWidth
                     required
                   />
                 </Grid>
-                <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter Pincode"
-                    label="Pincode"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="pinCode"
-                    value={stateMasterData.pinCode || ""}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter Sub Area"
-                    label="Sub Area"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="subArea"
-                    value={stateMasterData.subArea || ""}
-                    fullWidth
-                    
-                  />
-                </Grid>
-                <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter State"
-                    label="State"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="state"
-                    value={stateMasterData.state || ""}
-                    fullWidth
-                    
-                  />
-                </Grid>
-                <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter State Code"
-                    label="State Code"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="stateCode"
-                    value={stateMasterData.stateCode || ""}
-                    fullWidth
-                    required
-                  />
-                </Grid>
-                {/* <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter Company Code"
-                    label="Company Code"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="companyCode"
-                    value={stateMasterData.companyCode || ""}
-                    fullWidth
-                    required
-                  />
-                </Grid> */}
-                {/* <Grid xs={12} sm={4} item>
-      <TextField
-        placeholder="Enter createdBy"
-        label="CreatedBy"
-        for="createdBy"
-        disabled={isDisabled}
-        variant="outlined"
-        onChange={handleInputData}
-        name="createdBy"
-        value={companyData.createdBy || ""}
-        fullWidth
-        required
-      />
-    </Grid>
-    <Grid xs={12} sm={4} item>
-      <TextField
-        placeholder="Enter modifiedBy"
-        label="ModifiedBy"
-        disabled={isDisabled}
-        variant="outlined"
-        onChange={handleInputData}
-        name="modifiedBy"
-        value={companyData.modifiedBy || ""}
-        fullWidth
-      />
-    </Grid> */}
               </Grid>
             </Box>
 
@@ -330,7 +238,7 @@ const StateMasterForm = (data) => {
                 <Button
                   disabled={manageButton.save}
                   onClick={() => {
-                    handleInsertStateMasterData();
+                    handleInsertExpiryMasterData();
                     setIsDisabled(!isDisabled);
                   }}
                   color="green"
@@ -343,7 +251,7 @@ const StateMasterForm = (data) => {
                   disabled={manageButton.edit}
                   onClick={() => {
                     setIsDisabled(!isDisabled);
-                    handleStateMasterRecordsData();
+                    handleExpiryMasterRecordsData();
                     setManageButton({
                       create: true,
                       save: true,
@@ -363,7 +271,7 @@ const StateMasterForm = (data) => {
                 <Button
                   disabled={manageButton.update}
                   onClick={() => {
-                    handleUpdateStateMasterData();
+                    handleUpdateExpiryMasterData();
                   }}
                   color="violet"
                   variant="contained"
@@ -375,7 +283,7 @@ const StateMasterForm = (data) => {
                   disabled={manageButton.delete}
                   onClick={() => {
                     setIsDisabled(isDisabled);
-                    handleDeleteStateMasterData();
+                    handleDeleteExpiryMasterData();
                   }}
                   color="red"
                   variant="contained"
@@ -441,4 +349,4 @@ const StateMasterForm = (data) => {
   );
 };
 
-export default StateMasterForm;
+export default ExpiryMasterForm;

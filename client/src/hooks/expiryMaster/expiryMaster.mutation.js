@@ -1,59 +1,58 @@
 import { useMutation } from "@tanstack/react-query";
 import {
-  deleteCompanyData,
-  insertCompanyData,
-  updateCompanyData,
-} from "../../api/company/company.request";
+  insertExpiryMasterData,
+  updateExpiryMasterData,
+  deleteExpiryMasterData,
+} from "../../api/expiryMaster/expiryMaster.request";
 
-export const useInsertIntoCompanyData = () => {
+export const useInsertIntoExpiryMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await insertCompanyData(data);
+      const res = await insertExpiryMasterData(data);
       return res;
     },
     onSuccess: (data) => {
       console.log(data);
-      alert("Inserted Sucessfully 👍👍");
+      alert("Inserted Sucessfully");
     },
     onError: (error) => {
-      alert(
-        "Company Insertion Failed 👎👎, Please Insert all the requried Fields."
-      );
+      alert("ExpiryMaster Insertion Failed");
       console.log(error);
       return error;
     },
   });
 };
-export const useUpdateIntoCompanyData = () => {
+
+export const useUpdateIntoExpiryMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await updateCompanyData(data);
-
+      const res = await updateExpiryMasterData(data);
       return res;
     },
     onSuccess: (data) => {
       console.log(data);
-      alert("Updated Sucessfully 👍👍");
+      alert("Updated Sucessfully");
     },
     onError: (error) => {
-      alert("Company Updation Failed 👎👎");
+      alert("ExpiryMaster Updation Failed");
       console.log(error);
       return error;
     },
   });
 };
-export const useDeleteIntoCompanyData = () => {
+
+export const useDeleteIntoExpiryMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await deleteCompanyData(data);
+      const res = await deleteExpiryMasterData(data);
       return res;
     },
     onSuccess: (data) => {
       console.log(data);
-      alert("Deleted Sucessfully 👍👍");
+      alert("Deleted Sucessfully");
     },
     onError: (error) => {
-      alert("Company Deletion Failed 👎👎");
+      alert("ExpiryMaster Deletion Failed");
       console.log(error);
       return error;
     },

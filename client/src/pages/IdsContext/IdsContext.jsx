@@ -9,9 +9,13 @@ export const useIds = () => {
 
 const IdsProvider = ({ children }) => {
   const [ids, setIds] = useState({
+    userId:null,
     companyId: null,
     accountMasterId: null,
     groupMasterId: null,
+    itemMasterId:null,
+    gstRateMasterId:null,
+    stateMasterId:null
   });
 
   return (

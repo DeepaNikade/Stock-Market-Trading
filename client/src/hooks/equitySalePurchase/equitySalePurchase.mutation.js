@@ -1,14 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import {
-  deleteCompanyData,
-  insertCompanyData,
-  updateCompanyData,
-} from "../../api/company/company.request";
+  insertEquitySalePurchaseData,
+  updateEquitySalePurchaseData,
+  deleteEquitySalePurchaseData,
+} from "../../api/equitySalePurchase/equitySalePurchase.request";
 
-export const useInsertIntoCompanyData = () => {
+export const useInsertIntoEquitySalePurchaseData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await insertCompanyData(data);
+      const res = await insertEquitySalePurchaseData(data);
       return res;
     },
     onSuccess: (data) => {
@@ -17,18 +17,17 @@ export const useInsertIntoCompanyData = () => {
     },
     onError: (error) => {
       alert(
-        "Company Insertion Failed 👎👎, Please Insert all the requried Fields."
+        "EquitySalePurchase Insertion Failed 👎👎, Please Insert all the requried Fields."
       );
       console.log(error);
       return error;
     },
   });
 };
-export const useUpdateIntoCompanyData = () => {
+export const useUpdateIntoEquitySalePurchaseData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await updateCompanyData(data);
-
+      const res = await updateEquitySalePurchaseData(data);
       return res;
     },
     onSuccess: (data) => {
@@ -36,16 +35,16 @@ export const useUpdateIntoCompanyData = () => {
       alert("Updated Sucessfully 👍👍");
     },
     onError: (error) => {
-      alert("Company Updation Failed 👎👎");
+      alert("EquitySalePurchase Updation Failed 👎👎");
       console.log(error);
       return error;
     },
   });
 };
-export const useDeleteIntoCompanyData = () => {
+export const useDeleteIntoEquitySalePurchaseData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await deleteCompanyData(data);
+      const res = await deleteEquitySalePurchaseData(data);
       return res;
     },
     onSuccess: (data) => {
@@ -53,7 +52,7 @@ export const useDeleteIntoCompanyData = () => {
       alert("Deleted Sucessfully 👍👍");
     },
     onError: (error) => {
-      alert("Company Deletion Failed 👎👎");
+      alert("EquitySalePurchase Deletion Failed 👎👎");
       console.log(error);
       return error;
     },

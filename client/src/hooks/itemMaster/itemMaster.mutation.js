@@ -1,14 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import {
-  deleteCompanyData,
-  insertCompanyData,
-  updateCompanyData,
-} from "../../api/company/company.request";
+  deleteItemMasterData,
+  insertItemMasterData,
+  updateItemMasterData,
+} from "../../api/itemMaster/itemMaster.request";
 
-export const useInsertIntoCompanyData = () => {
+export const useInsertIntoItemMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await insertCompanyData(data);
+      const res = await insertItemMasterData(data);
       return res;
     },
     onSuccess: (data) => {
@@ -16,19 +16,16 @@ export const useInsertIntoCompanyData = () => {
       alert("Inserted Sucessfully 👍👍");
     },
     onError: (error) => {
-      alert(
-        "Company Insertion Failed 👎👎, Please Insert all the requried Fields."
-      );
+      alert("ItemMaster Insertion Failed 👎👎");
       console.log(error);
       return error;
     },
   });
 };
-export const useUpdateIntoCompanyData = () => {
+export const useUpdateIntoItemMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await updateCompanyData(data);
-
+      const res = await updateItemMasterData(data);
       return res;
     },
     onSuccess: (data) => {
@@ -36,16 +33,16 @@ export const useUpdateIntoCompanyData = () => {
       alert("Updated Sucessfully 👍👍");
     },
     onError: (error) => {
-      alert("Company Updation Failed 👎👎");
+      alert("ItemMaster Updation Failed 👎👎");
       console.log(error);
       return error;
     },
   });
 };
-export const useDeleteIntoCompanyData = () => {
+export const useDeleteIntoItemMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await deleteCompanyData(data);
+      const res = await deleteItemMasterData(data);
       return res;
     },
     onSuccess: (data) => {
@@ -53,7 +50,7 @@ export const useDeleteIntoCompanyData = () => {
       alert("Deleted Sucessfully 👍👍");
     },
     onError: (error) => {
-      alert("Company Deletion Failed 👎👎");
+      alert("ItemMaster Deletion Failed 👎👎");
       console.log(error);
       return error;
     },

@@ -1,59 +1,58 @@
 import { useMutation } from "@tanstack/react-query";
 import {
-  deleteCompanyData,
-  insertCompanyData,
-  updateCompanyData,
-} from "../../api/company/company.request";
+  insertGroupMasterData,
+  updateGroupMasterData,
+  deleteGroupMasterData,
+} from "../../api/groupMaster/groupMaster.request";
 
-export const useInsertIntoCompanyData = () => {
+export const useInsertIntoGroupMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await insertCompanyData(data);
+      const res = await insertGroupMasterData(data);
       return res;
     },
     onSuccess: (data) => {
       console.log(data);
-      alert("Inserted Sucessfully 👍👍");
+      alert("Inserted Sucessfully");
     },
     onError: (error) => {
-      alert(
-        "Company Insertion Failed 👎👎, Please Insert all the requried Fields."
-      );
+      alert("GroupMaster Insertion Failed");
       console.log(error);
       return error;
     },
   });
 };
-export const useUpdateIntoCompanyData = () => {
+
+export const useUpdateIntoGroupMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await updateCompanyData(data);
-
+      const res = await updateGroupMasterData(data);
       return res;
     },
     onSuccess: (data) => {
       console.log(data);
-      alert("Updated Sucessfully 👍👍");
+      alert("Updated Sucessfully");
     },
     onError: (error) => {
-      alert("Company Updation Failed 👎👎");
+      alert("GroupMaster Updation Failed");
       console.log(error);
       return error;
     },
   });
 };
-export const useDeleteIntoCompanyData = () => {
+
+export const useDeleteIntoGroupMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await deleteCompanyData(data);
+      const res = await deleteGroupMasterData(data);
       return res;
     },
     onSuccess: (data) => {
       console.log(data);
-      alert("Deleted Sucessfully 👍👍");
+      alert("Deleted Sucessfully");
     },
     onError: (error) => {
-      alert("Company Deletion Failed 👎👎");
+      alert("GroupMaster Deletion Failed");
       console.log(error);
       return error;
     },

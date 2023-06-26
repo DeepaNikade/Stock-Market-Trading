@@ -1,59 +1,58 @@
 import { useMutation } from "@tanstack/react-query";
 import {
-  deleteCompanyData,
-  insertCompanyData,
-  updateCompanyData,
-} from "../../api/company/company.request";
+  insertGstRateMasterData,
+  updateGstRateMasterData,
+  deleteGstRateMasterData,
+} from "../../api/gstRateMaster/gstRateMaster.request";
 
-export const useInsertIntoCompanyData = () => {
+export const useInsertIntoGstRateMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await insertCompanyData(data);
+      const res = await insertGstRateMasterData(data);
       return res;
     },
     onSuccess: (data) => {
       console.log(data);
-      alert("Inserted Sucessfully 👍👍");
+      alert("Inserted Sucessfully");
     },
     onError: (error) => {
-      alert(
-        "Company Insertion Failed 👎👎, Please Insert all the requried Fields."
-      );
+      alert("GstRateMaster Insertion Failed");
       console.log(error);
       return error;
     },
   });
 };
-export const useUpdateIntoCompanyData = () => {
+
+export const useUpdateIntoGstRateMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await updateCompanyData(data);
-
+      const res = await updateGstRateMasterData(data);
       return res;
     },
     onSuccess: (data) => {
       console.log(data);
-      alert("Updated Sucessfully 👍👍");
+      alert("Updated Sucessfully");
     },
     onError: (error) => {
-      alert("Company Updation Failed 👎👎");
+      alert("GstRateMaster Updation Failed");
       console.log(error);
       return error;
     },
   });
 };
-export const useDeleteIntoCompanyData = () => {
+
+export const useDeleteIntoGstRateMasterData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await deleteCompanyData(data);
+      const res = await deleteGstRateMasterData(data);
       return res;
     },
     onSuccess: (data) => {
       console.log(data);
-      alert("Deleted Sucessfully 👍👍");
+      alert("Deleted Sucessfully");
     },
     onError: (error) => {
-      alert("Company Deletion Failed 👎👎");
+      alert("GstRateMaster Deletion Failed");
       console.log(error);
       return error;
     },

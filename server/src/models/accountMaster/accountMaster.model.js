@@ -37,7 +37,7 @@ export const accountMaster = mssql.define(ACCOUNT_MASTER, {
     type: DataTypes.CHAR(1),
     allowNull: true,
   },
-  unregisted: {
+  unregistered: {
     type: DataTypes.CHAR(1),
     allowNull: true,
   },

@@ -9,61 +9,58 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import { getAllScriptMasterData } from "../../api/scriptMaster/scriptMaster.request";
-import ScriptMasterForm from "./scriptMasterForm";
+import { getAllExpiryMasterData } from "../../api/expiryMaster/expiryMaster.request";
+import ExpiryMasterForm from "./expiryMasterForm";
 import CustomIconButton from "../../components/Buttons/CustomIconButton";
 import { Search } from "@mui/icons-material";
-import {useIds} from "../IdsContext/IdsContext";
+import { useIds } from "../IdsContext/IdsContext";
 
-const ScriptMasterRecords = () => {
-  const {ids,setIds} = useIds();
-  const [scriptMasterData, setScriptMasterData] = useState([]);
+const ExpiryMasterRecords = () => {
+  const { ids, setIds } = useIds();
+
+  const [expiryMasterData, setExpiryMasterData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [redirectToScriptMasterForm, setRedirectToScriptMasterForm] =
+  const [redirectToExpiryMasterForm, setRedirectToExpiryMasterForm] =
     useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
   useEffect(() => {
-    const fetchScriptMasterData = async () => {
+    const fetchExpiryMasterData = async () => {
       try {
-        const response = await getAllScriptMasterData();
-        setScriptMasterData(response.data);
+        const response = await getAllExpiryMasterData();
+        setExpiryMasterData(response.data);
       } catch (error) {
-        console.error("Failed to fetch Script data:", error);
+        console.error("Failed to fetch expiry data:", error);
       }
     };
-    fetchScriptMasterData();
+    fetchExpiryMasterData();
   }, []);
 
   const handleSearch = () => {
     if (searchQuery) {
-      const filteredData = scriptMasterData.filter((data) =>
-        data.scriptName.toLowerCase().includes(searchQuery.toLowerCase())
+      const filteredData = expiryMasterData.filter((data) =>
+        data.expiryName.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setScriptMasterData(filteredData);
+      setExpiryMasterData(filteredData);
     } else {
-      setScriptMasterData(scriptMasterData);
+      setExpiryMasterData(expiryMasterData);
     }
   };
-  const handleClick = (scriptMaster) => {
-   
-    const scriptMasterId = scriptMaster.id;
-    setIds((prev) => ({ ...prev, scriptMasterId }));
-    setRedirectToScriptMasterForm(true);
-    setSelectedData(scriptMaster);
+
+  const handleClick = (expiry) => {
+    console.log(expiry.id);
+    const expiryMasterId = expiry.id;
+    setIds((prev) => ({ ...prev, expiryMasterId }));
+    setRedirectToExpiryMasterForm(true);
+    setSelectedData(expiry);
   };
 
   const handleAddClick = () => {
-      setRedirectToScriptMasterForm(true);
+    setRedirectToExpiryMasterForm(true);
   };
 
-
- 
-
-  if (redirectToScriptMasterForm) {
-    console.log("selectedData",selectedData);
-    return <ScriptMasterForm data={selectedData} />;
-  
+  if (redirectToExpiryMasterForm) {
+    return <ExpiryMasterForm data={selectedData} />;
   }
   return (
     <Box
@@ -83,7 +80,7 @@ const ScriptMasterRecords = () => {
         }}
         variant="h4"
       >
-        ScriptMaster Records
+        ExpiryMaster Records
       </Typography>
       <Box
         sx={{
@@ -119,7 +116,7 @@ const ScriptMasterRecords = () => {
           <TextField
             id="search-bar"
             className="text"
-            label="Enter a Script name"
+            label="Enter a Expiry id"
             variant="outlined"
             placeholder="Search..."
             value={searchQuery}
@@ -142,19 +139,13 @@ const ScriptMasterRecords = () => {
         <TableHead>
           <TableRow>
             <TableCell style={{ fontWeight: "bold" }}>id</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>scriptName</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>scriptType</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>lotSize</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>faceValue</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>scriptId</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>isinNo</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>createdBy</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>modifiedBy</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>expiryDate</TableCell>
+            
           </TableRow>
         </TableHead>
 
         <tbody>
-          {scriptMasterData.map((data) => (
+          {expiryMasterData.map((data) => (
             <TableRow
               key={data.id}
               onClick={() => {
@@ -163,22 +154,14 @@ const ScriptMasterRecords = () => {
               sx={{ cursor: "pointer" }}
             >
               <TableCell>{data.id}</TableCell>
-              <TableCell>{data.scriptName}</TableCell>
-              <TableCell>{data.scriptType}</TableCell>
-              <TableCell>{data.lotSize}</TableCell>
-              <TableCell>{data.facevalue}</TableCell>
-              <TableCell>{data.scriptId}</TableCell>
-              <TableCell>{data.isinNo}</TableCell>
-              <TableCell>{data.createdBy}</TableCell>
-              <TableCell>{data.modifiedBy}</TableCell>
+              <TableCell>{data.expiryDate}</TableCell>
+              
             </TableRow>
           ))}
         </tbody>
       </Table>
-
-      {/* {redirectToscriptForm && <scriptForm />} */}
     </Box>
   );
 };
 
-export default ScriptMasterRecords;
+export default ExpiryMasterRecords;

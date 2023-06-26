@@ -8,25 +8,20 @@ export const equitySalePurchase = mssql.define(EQUITY_SALE_PURCHASE, {
     primaryKey: true,
     autoIncrement: true,
   },
-  bill_no: {
+  billNo: {
     type: DataTypes.STRING(255),
-    field: "billNo",
   },
-  bill_date: {
+  billDate: {
     type: DataTypes.DATEONLY,
-    field: "billDate",
   },
-  transaction_type: {
+  transactionType: {
     type: DataTypes.CHAR(1),
-    field: "transactionType",
   },
-  script_id: {
+  scriptId: {
     type: DataTypes.INTEGER,
-    field: "scriptId",
   },
-  purchase_id: {
+  purchaseId: {
     type: DataTypes.INTEGER,
-    field: "purchaseId",
   },
   quantity: {
     type: DataTypes.INTEGER,
@@ -37,9 +32,8 @@ export const equitySalePurchase = mssql.define(EQUITY_SALE_PURCHASE, {
   value: {
     type: DataTypes.DECIMAL(18, 2),
   },
-  account_id: {
+  accountId: {
     type: DataTypes.INTEGER,
-    field: "accountId",
   },
   brokage: {
     type: DataTypes.DECIMAL(18, 2),
@@ -50,36 +44,32 @@ export const equitySalePurchase = mssql.define(EQUITY_SALE_PURCHASE, {
   stt: {
     type: DataTypes.DECIMAL(18, 2),
   },
-  service_tax: {
+  serviceTax: {
     type: DataTypes.DECIMAL(18, 2),
-    field: "serviceTax",
   },
-  stamp_duty: {
+  stampDuty: {
     type: DataTypes.DECIMAL(18, 2),
-    field: "stampDuty",
   },
-  turnover_tax: {
+  turnoverTax: {
     type: DataTypes.DECIMAL(18, 2),
-    field: "turnoverTax",
   },
-  net_value: {
+  netValue: {
     type: DataTypes.DECIMAL(18, 2),
-    field: "netValue",
   },
-  net_rate: {
+  netRate: {
     type: DataTypes.DECIMAL(18, 2),
-    field: "netRate",
   },
-  company_code: {
+  yearCode:{
+   type:DataTypes.INTEGER,
+  },
+  companyCode: {
     type: DataTypes.INTEGER,
-    field: "companyCode",
   },
-  created_by: {
+  createdBy: {
     type: DataTypes.INTEGER,
-    field: "createdBy",
   },
-  modified_by: {
+  
+  modifiedBy: {
     type: DataTypes.INTEGER,
-    field: "modifiedBy",
   },
 });

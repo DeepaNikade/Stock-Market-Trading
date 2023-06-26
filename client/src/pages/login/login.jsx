@@ -14,11 +14,15 @@ import Image from "../../assets/login.jpg";
 import { getAllUsersData } from "../../api/users/users";
 import { useState } from "react";
 import CompanySelection from "../companySelection/companySelectionRecord";
+import { useIds } from "../IdsContext/IdsContext";
 
 export default function LoginIn() {
+  const { ids, setIds } = useIds();
+
   const [data, setData] = useState({
     userId: "",
     password: "",
+    id: null,
   });
   const [redirectToCompanySelection, setRedirectToCompanySelection] =
     useState(false);
@@ -39,6 +43,7 @@ export default function LoginIn() {
       const info = {
         userId: data.userId,
         password: data.password,
+        id: data.id,
       };
       console.log(info);
 
@@ -47,23 +52,22 @@ export default function LoginIn() {
           user.userId === info.userId && user.userPassword === info.password
       );
 
+      
       if (matchedUser) {
         console.log(
           matchedUser.userId,
           matchedUser.userPassword,
+          matchedUser.id,
           info.userId,
-          info.password
-        );
+          info.password,
+          );
+          const userId = matchedUser.id
+        setIds((prev) => ({ ...prev,userId}));
         setRedirectToCompanySelection(true);
       } else {
         alert("Invalid UserName or Password");
       }
       console.log("outside");
-
-      //   if (redirectToCompanySelection) {
-      //     console.log("redirect");
-      //     return <CompanySelection />;
-      //   }
     } catch (error) {
       console.error("Failed to fetch data:", error);
     }
@@ -105,21 +109,15 @@ export default function LoginIn() {
 
             <Typography variant="h5">Login</Typography>
 
-            <Box
-              //component="form"
-              //noValidate
-              sx={{ mt: 1, width: "70%" }}
-            >
+            <Box sx={{ mt: 1, width: "70%" }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                //id="userId"
                 label="User Id"
                 name="userId"
                 value={data.userId}
                 onChange={handleChange}
-                //autoComplete="userId"
                 autoFocus
               />
               <TextField

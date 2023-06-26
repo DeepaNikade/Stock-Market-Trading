@@ -9,61 +9,60 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import { getAllScriptMasterData } from "../../api/scriptMaster/scriptMaster.request";
-import ScriptMasterForm from "./scriptMasterForm";
+import { getAllStateMasterData } from "../../api/stateMaster/stateMaster.request";
+import StateMasterForm from "../../pages/stateMaster/stateMasterForm";
 import CustomIconButton from "../../components/Buttons/CustomIconButton";
 import { Search } from "@mui/icons-material";
-import {useIds} from "../IdsContext/IdsContext";
+import {useIds} from "../IdsContext/IdsContext"
 
-const ScriptMasterRecords = () => {
-  const {ids,setIds} = useIds();
-  const [scriptMasterData, setScriptMasterData] = useState([]);
+const StateMasterRecords = () => {
+  const {ids, setIds} = useIds()
+  const [stateMasterData, setStateMasterData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [redirectToScriptMasterForm, setRedirectToScriptMasterForm] =
+  const [redirectToStateMasterForm, setRedirectToStateMasterForm] =
     useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
   useEffect(() => {
-    const fetchScriptMasterData = async () => {
+    const fetchStateMasterData = async () => {
       try {
-        const response = await getAllScriptMasterData();
-        setScriptMasterData(response.data);
+        const response = await getAllStateMasterData();
+        setStateMasterData(response.data);
       } catch (error) {
-        console.error("Failed to fetch Script data:", error);
+        console.error("Failed to fetch State data:", error);
       }
     };
-    fetchScriptMasterData();
+    fetchStateMasterData();
   }, []);
 
   const handleSearch = () => {
     if (searchQuery) {
-      const filteredData = scriptMasterData.filter((data) =>
-        data.scriptName.toLowerCase().includes(searchQuery.toLowerCase())
+      const filteredData = stateMasterData.filter((data) =>
+        data.cityName.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setScriptMasterData(filteredData);
+      setstateData(filteredData);
     } else {
-      setScriptMasterData(scriptMasterData);
+      setstateData(stateMasterData);
     }
   };
-  const handleClick = (scriptMaster) => {
-   
-    const scriptMasterId = scriptMaster.id;
-    setIds((prev) => ({ ...prev, scriptMasterId }));
-    setRedirectToScriptMasterForm(true);
-    setSelectedData(scriptMaster);
+
+  const handleClick = (state) => {
+    console.log(state);
+    const stateMasterId = state.id
+    setIds((prev)=>({...prev , stateMasterId}))
+    setRedirectToStateMasterForm(true);
+    setSelectedData(state);
+    //console.log(setSelectedData(data));
   };
-
-  const handleAddClick = () => {
-      setRedirectToScriptMasterForm(true);
-  };
-
-
- 
-
-  if (redirectToScriptMasterForm) {
-    console.log("selectedData",selectedData);
-    return <ScriptMasterForm data={selectedData} />;
   
+  const handleAddClick = () => {
+   
+    setRedirectToStateMasterForm(true);
+   
+  };
+
+  if (redirectToStateMasterForm) {
+    return <StateMasterForm data={selectedData} />;
   }
   return (
     <Box
@@ -83,7 +82,7 @@ const ScriptMasterRecords = () => {
         }}
         variant="h4"
       >
-        ScriptMaster Records
+        StateMaster Records
       </Typography>
       <Box
         sx={{
@@ -119,7 +118,7 @@ const ScriptMasterRecords = () => {
           <TextField
             id="search-bar"
             className="text"
-            label="Enter a Script name"
+            label="Enter a City name"
             variant="outlined"
             placeholder="Search..."
             value={searchQuery}
@@ -142,19 +141,19 @@ const ScriptMasterRecords = () => {
         <TableHead>
           <TableRow>
             <TableCell style={{ fontWeight: "bold" }}>id</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>scriptName</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>scriptType</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>lotSize</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>faceValue</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>scriptId</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>isinNo</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>cityName</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>pincode</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>state</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>subArea</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>companyCode</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>state</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>createdBy</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>modifiedBy</TableCell>
           </TableRow>
         </TableHead>
 
         <tbody>
-          {scriptMasterData.map((data) => (
+          {stateMasterData.map((data) => (
             <TableRow
               key={data.id}
               onClick={() => {
@@ -163,12 +162,12 @@ const ScriptMasterRecords = () => {
               sx={{ cursor: "pointer" }}
             >
               <TableCell>{data.id}</TableCell>
-              <TableCell>{data.scriptName}</TableCell>
-              <TableCell>{data.scriptType}</TableCell>
-              <TableCell>{data.lotSize}</TableCell>
-              <TableCell>{data.facevalue}</TableCell>
-              <TableCell>{data.scriptId}</TableCell>
-              <TableCell>{data.isinNo}</TableCell>
+              <TableCell>{data.cityName}</TableCell>
+              <TableCell>{data.pincode}</TableCell>
+              <TableCell>{data.subArea}</TableCell>
+              <TableCell>{data.state}</TableCell>
+              <TableCell>{data.companyCode}</TableCell>
+              <TableCell>{data.state}</TableCell>
               <TableCell>{data.createdBy}</TableCell>
               <TableCell>{data.modifiedBy}</TableCell>
             </TableRow>
@@ -176,9 +175,9 @@ const ScriptMasterRecords = () => {
         </tbody>
       </Table>
 
-      {/* {redirectToscriptForm && <scriptForm />} */}
+      {/* {redirectTostateForm && <stateForm />} */}
     </Box>
   );
 };
 
-export default ScriptMasterRecords;
+export default StateMasterRecords;

@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import { Grid, TextField, Button, Typography, Box } from "@mui/material";
+
 import {
   ArrowBack,
   KeyboardArrowLeft,
@@ -8,101 +9,99 @@ import {
   KeyboardDoubleArrowRight,
 } from "@mui/icons-material";
 import {
-  useInsertIntoStateMasterData,
-  useUpdateIntoStateMasterData,
-  useDeleteIntoStateMasterData,
-} from "../../hooks/stateMaster/stateMaster.mutation";
+  useInsertIntoGstRateMasterData,
+  useUpdateIntoGstRateMasterData,
+  useDeleteIntoGstRateMasterData,
+} from "../../hooks/gstRateMaster/gstRateMaster.mutation";
 import { useColors } from "../../hooks/use-colors";
 import CustomIconButton from "../../components/Buttons/CustomIconButton";
-import StateMasterRecords from "./stateMasterRecords";
+import GstRateMasterRecords from "./gstRateMasterRecords";
 import MenuBar from "../menu/menuBar";
 import { useIds } from "../IdsContext/IdsContext";
 
-const StateMasterForm = (data) => {
+const GstRateMasterForm = ({data}) => {
   const { ids } = useIds();
-  const [stateMasterData, setStateMasterData] = useState({
-    id: "",
-    cityName: "",
-    pinCode: "",
-    subArea: "",
-    state: "",
-    stateCode: "",
+  const [gstRateMasterData, setGstRateMasterData] = useState({
+    gstName: "",
+    rate: "",
+    cGstRate: "",
+    sGstRate: "",
+    iGstRate: "",
     companyCode: "",
     createdBy: null,
     modifiedBy: null,
   });
 
-  const [stateMasterId, setStateMasterId] = useState(null);
+  const [gstRateMasterId, setGstRateMasterId] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [redirectToStateMasterRecords, setRedirectToStateMasterRecords] =
+  const [redirectToGstRateMasterRecords, setRedirectToGstRateMasterRecords] =
     useState(false);
 
   const handleInputData = (e) => {
-    setStateMasterData({ ...stateMasterData, [e.target.name]: e.target.value });
+    setGstRateMasterData({
+      ...gstRateMasterData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleStateMasterRecordsData = () => {
-    setStateMasterData(data.data);
-    setStateMasterId(data.data.id);
+  const handleGstRateMasterRecordsData = () => {
+    setGstRateMasterData(data);
+    setGstRateMasterId(data.id);
   };
 
   const handleClick = () => {
-    setRedirectToStateMasterRecords(true);
+    setRedirectToGstRateMasterRecords(true);
   };
 
   const handleClear = () => {
-    setStateMasterId(null);
-    setStateMasterData({
-      id: "",
-      cityName: "",
-      pinCode: "",
-      subArea: "",
-      state: "",
-      stateCode: "",
+    setGstRateMasterId(null);
+    setGstRateMasterData({
+      gstName: "",
+      rate: "",
+      cGstRate: "",
+      sGstRate: "",
+      iGstRate: "",
       companyCode: "",
       createdBy: null,
       modifiedBy: null,
     });
   };
 
-  const insertStateMasterMutation = useInsertIntoStateMasterData();
+  const insertGstRateMasterMutation = useInsertIntoGstRateMasterData();
 
-  function handleInsertStateMasterData() {
-     
-    const insertStateMasterData = {
-      cityName: stateMasterData.cityName ,
-      stateCode: stateMasterData.stateCode,
+  function handleInsertGstRateMasterData() {
+    insertGstRateMasterMutation.mutate({
+      ...gstRateMasterData,
       companyCode: ids.companyId,
-      createdBy: ids.userId
-    }
-
-    insertStateMasterMutation.mutate(insertStateMasterData);
+      createdBy: ids.userId,
+    });
   }
-  const updateStateMasterMutation = useUpdateIntoStateMasterData();
+  const updateGstRateMasterMutation = useUpdateIntoGstRateMasterData();
 
-  function handleUpdateStateMasterData() {
-    updateStateMasterMutation.mutate(stateMasterData);
-    const updateStateMasterData = {
-      id:stateMasterData.id ,
-      cityName:stateMasterData.cityName ,
-      stateCode: stateMasterData.stateCode,
-      companyCode: stateMasterData.companyCode,
-      modifiedBy:stateMasterData.modifiedBy
+  function handleUpdateGstRateMasterData() {
+    const updateGstRateMasterData = {
+      id:gstRateMasterData.id ,
+      gstName: gstRateMasterData.gstName,
+      rate: gstRateMasterData.rate,
+      cGstRate: gstRateMasterData.cGstRate,
+      sGstRate: gstRateMasterData.sGstRate,
+      iGstRate: gstRateMasterData.iGstRate,
+      companyCode: gstRateMasterData.companyCode,
+      modifiedBy: gstRateMasterData.modifiedBy
     }
-    updateStateMasterMutation.mutate(updateStateMasterData);
+    updateGstRateMasterMutation.mutate(updateGstRateMasterData);
   }
-  const deleteStateMasterMutation = useDeleteIntoStateMasterData();
+  const deleteGstRateMasterMutation = useDeleteIntoGstRateMasterData();
 
-  function handleDeleteStateMasterData() {
-    deleteStateMasterMutation.mutate({ id: stateMasterId });
-    setStateMasterId(null);
-    setStateMasterData({
-      id: "",
-      cityName: "",
-      pinCode: "",
-      subArea: "",
-      state: "",
-      stateCode: "",
+  function handleDeleteGstRateMasterData() {
+    deleteGstRateMasterMutation.mutate({ id: gstRateMasterId });
+    setGstRateMasterId(null);
+    setGstRateMasterData({
+      gstName: "",
+      rate: "",
+      cGstRate: "",
+      sGstRate: "",
+      iGstRate: "",
       companyCode: "",
       createdBy: null,
       modifiedBy: null,
@@ -122,8 +121,8 @@ const StateMasterForm = (data) => {
 
   return (
     <>
-      {redirectToStateMasterRecords ? (
-        <StateMasterRecords />
+      {redirectToGstRateMasterRecords ? (
+        <GstRateMasterRecords />
       ) : (
         <>
           <MenuBar />
@@ -152,7 +151,7 @@ const StateMasterForm = (data) => {
                 onClick={() => {
                   handleClick();
                 }}
-                description={"Go Back To StateMaster Records"}
+                description={"Go Back To GstRateMaster Records"}
               >
                 <ArrowBack />
               </CustomIconButton>
@@ -167,7 +166,7 @@ const StateMasterForm = (data) => {
                 }}
                 variant="h5"
               >
-                StateMaster Form
+                GstRateMaster Form
               </Typography>
             </Box>
 
@@ -182,11 +181,12 @@ const StateMasterForm = (data) => {
               <Grid container spacing={3}>
                 <Grid xs={12} sm={4} item>
                   <TextField
-                    placeholder="Enter State Master Id"
-                    label="State Id"
+                    placeholder="Enter GstRate Id"
+                    label="GstRate Id"
                     disabled
                     variant="outlined"
-                    value={stateMasterId || ""}
+                    value={gstRateMasterId ?? ""}
+                    // InputLabelProps={{ shrink: length > 0 ? true : false }}
                     fullWidth
                     required
                   />
@@ -194,69 +194,70 @@ const StateMasterForm = (data) => {
 
                 <Grid xs={12} sm={4} item>
                   <TextField
-                    placeholder="Enter City Name"
-                    label="City Name"
+                    placeholder="Enter Gst Name"
+                    label="Gst Name"
                     disabled={isDisabled}
                     variant="outlined"
                     onChange={handleInputData}
-                    name="cityName"
-                    value={stateMasterData.cityName}
+                    name="gstName"
+                    value={gstRateMasterData.gstName}
                     fullWidth
                     required
                   />
                 </Grid>
                 <Grid xs={12} sm={4} item>
                   <TextField
-                    placeholder="Enter Pincode"
-                    label="Pincode"
+                    placeholder="Enter Rate"
+                    label="Rate"
                     disabled={isDisabled}
                     variant="outlined"
                     onChange={handleInputData}
-                    name="pinCode"
-                    value={stateMasterData.pinCode || ""}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter Sub Area"
-                    label="Sub Area"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="subArea"
-                    value={stateMasterData.subArea || ""}
-                    fullWidth
-                    
-                  />
-                </Grid>
-                <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter State"
-                    label="State"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="state"
-                    value={stateMasterData.state || ""}
-                    fullWidth
-                    
-                  />
-                </Grid>
-                <Grid xs={12} sm={4} item>
-                  <TextField
-                    placeholder="Enter State Code"
-                    label="State Code"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    onChange={handleInputData}
-                    name="stateCode"
-                    value={stateMasterData.stateCode || ""}
+                    name="rate"
+                    value={gstRateMasterData.rate || ""}
                     fullWidth
                     required
                   />
                 </Grid>
-                {/* <Grid xs={12} sm={4} item>
+                <Grid xs={12} sm={4} item>
+                  <TextField
+                    placeholder="Enter CGst Rate"
+                    label="CGst Rate"
+                    disabled={isDisabled}
+                    variant="outlined"
+                    onChange={handleInputData}
+                    name="cGstRate"
+                    value={gstRateMasterData.cGstRate || ""}
+                    fullWidth
+                    required
+                  />
+                </Grid>
+                <Grid xs={12} sm={4} item>
+                  <TextField
+                    placeholder="Enter SGst Rate"
+                    label="SGst Rate"
+                    disabled={isDisabled}
+                    variant="outlined"
+                    onChange={handleInputData}
+                    name="sGstRate"
+                    value={gstRateMasterData.sGstRate || ""}
+                    fullWidth
+                    required
+                  />
+                </Grid>
+                <Grid xs={12} sm={4} item>
+                  <TextField
+                    placeholder="Enter IGst Rate"
+                    label="IGst Rate"
+                    disabled={isDisabled}
+                    variant="outlined"
+                    onChange={handleInputData}
+                    name="iGstRate"
+                    value={gstRateMasterData.iGstRate || ""}
+                    fullWidth
+                    required
+                  />
+                </Grid>
+                <Grid xs={12} sm={4} item>
                   <TextField
                     placeholder="Enter Company Code"
                     label="Company Code"
@@ -264,11 +265,11 @@ const StateMasterForm = (data) => {
                     variant="outlined"
                     onChange={handleInputData}
                     name="companyCode"
-                    value={stateMasterData.companyCode || ""}
+                    value={gstRateMasterData.companyCode || ""}
                     fullWidth
                     required
                   />
-                </Grid> */}
+                </Grid>
                 {/* <Grid xs={12} sm={4} item>
       <TextField
         placeholder="Enter createdBy"
@@ -330,7 +331,7 @@ const StateMasterForm = (data) => {
                 <Button
                   disabled={manageButton.save}
                   onClick={() => {
-                    handleInsertStateMasterData();
+                    handleInsertGstRateMasterData();
                     setIsDisabled(!isDisabled);
                   }}
                   color="green"
@@ -343,7 +344,7 @@ const StateMasterForm = (data) => {
                   disabled={manageButton.edit}
                   onClick={() => {
                     setIsDisabled(!isDisabled);
-                    handleStateMasterRecordsData();
+                    handleGstRateMasterRecordsData();
                     setManageButton({
                       create: true,
                       save: true,
@@ -363,7 +364,7 @@ const StateMasterForm = (data) => {
                 <Button
                   disabled={manageButton.update}
                   onClick={() => {
-                    handleUpdateStateMasterData();
+                    handleUpdateGstRateMasterData();
                   }}
                   color="violet"
                   variant="contained"
@@ -375,7 +376,7 @@ const StateMasterForm = (data) => {
                   disabled={manageButton.delete}
                   onClick={() => {
                     setIsDisabled(isDisabled);
-                    handleDeleteStateMasterData();
+                    handleDeleteGstRateMasterData();
                   }}
                   color="red"
                   variant="contained"
@@ -441,4 +442,4 @@ const StateMasterForm = (data) => {
   );
 };
 
-export default StateMasterForm;
+export default GstRateMasterForm;

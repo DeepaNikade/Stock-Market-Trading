@@ -8,17 +8,14 @@ export const transactionHead = mssql.define(TRANSACTION_HEAD, {
     primaryKey: true,
     autoIncrement: true,
   },
-  tran_type: {
+  tranType: {
     type: DataTypes.CHAR(2),
-    field: "trantype",
   },
-  doc_no: {
+  docNo: {
     type: DataTypes.INTEGER,
-    field: "docNo",
   },
-  doc_date: {
+  docDate: {
     type: DataTypes.DATE,
-    field: "docDate",
   },
   cashbank: {
     type: DataTypes.INTEGER,
@@ -29,23 +26,19 @@ export const transactionHead = mssql.define(TRANSACTION_HEAD, {
   ode: {
     type: DataTypes.INTEGER,
   },
-  year_code: {
+  yearCode: {
     type: DataTypes.INTEGER,
-    field: "yearCode",
   },
-  company_code: {
+  companyCode: {
     type: DataTypes.INTEGER,
-    field: "companyCode",
   },
   cb: {
     type: DataTypes.INTEGER,
   },
-  created_by: {
+  createdBy: {
     type: DataTypes.INTEGER,
-    field: "createdBy",
   },
-  modified_by: {
+  modifiedBy: {
     type: DataTypes.INTEGER,
-    field: "modifiedBy",
   },
 });

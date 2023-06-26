@@ -1,4 +1,14 @@
-import { Grid, TextField, Button, Typography, Box } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import {
   ArrowBack,
   KeyboardArrowLeft,
@@ -6,7 +16,8 @@ import {
   KeyboardDoubleArrowLeft,
   KeyboardDoubleArrowRight,
 } from "@mui/icons-material";
-import React, { useState} from "react";
+import React, { useEffect, useState } from "react";
+
 import { useColors } from "../../hooks/use-colors";
 import CustomIconButton from "../../components/Buttons/CustomIconButton";
 import {
@@ -17,10 +28,11 @@ import {
 import AccountMasterRecords from "./AccountMasterRecords";
 import MenuBar from "../menu/menuBar";
 import { useIds } from "../IdsContext/IdsContext";
+import { getAllGroupMasterData } from "../../api/groupMaster/groupMaster.request";
 
 const AccountMasterForm = ({ data }) => {
   const { ids } = useIds();
- // console.log(cids);
+  // console.log(cids);
 
   const [accountData, setAccountData] = useState({
     accountName: "",
@@ -30,9 +42,9 @@ const AccountMasterForm = ({ data }) => {
     groupId: null,
     openingBalance: null,
     drcr: "",
-    unregister: "",
+    unregistered: "",
     gstNo: "",
-    fssiNo: "",
+    fssaiNo: "",
     stateCode: "",
     bankAccountCode: "",
     bankName: "",
@@ -46,14 +58,17 @@ const AccountMasterForm = ({ data }) => {
     mobileNo: "",
     tanNo: "",
     companyCode: null,
-    //   createdBy: "",
+    createdBy: null,
     //   modifiedBy: "",
   });
   const [accountMasterId, setAccountmasterId] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
   const [redirectToAccountRecords, setRedirectToAccountRecords] =
     useState(false);
- 
+
+  const [groupMasterData, setGroupMasterData] = useState([]);
+  const [selectedGroupId, setSelectedGroupId] = useState("");
+  const [selectedGroupName, setSelectedGroupName] = useState("");
 
   const handleInputData = (e) => {
     // const isNumeric = !isNaN(e.target.value);
@@ -65,6 +80,7 @@ const AccountMasterForm = ({ data }) => {
   };
 
   const handleAccountRecordsData = () => {
+    console.log(data)
     setAccountData(data);
     setAccountmasterId(data.id);
   };
@@ -84,9 +100,9 @@ const AccountMasterForm = ({ data }) => {
       groupId: null,
       openingBalance: null,
       drcr: "",
-      unregister: "",
+      unregistered: "",
       gstNo: "",
-      fssiNo: "",
+      fssaiNo: "",
       stateCode: "",
       bankAccountCode: "",
       bankName: "",
@@ -106,7 +122,12 @@ const AccountMasterForm = ({ data }) => {
   const insertAccountMasterMutation = useInsertIntoAccountMasterData();
 
   function handleInsertAccountMasterData() {
-    insertAccountMasterMutation.mutate({ ...accountData, companyCode: ids.companyId });
+    insertAccountMasterMutation.mutate({
+      ...accountData,
+      companyCode: ids.companyId,
+      createdBy: ids.userId,
+      groupId: selectedGroupId,
+    });
     setIsDisabled(isDisabled);
 
     setManageButton({
@@ -136,9 +157,9 @@ const AccountMasterForm = ({ data }) => {
       groupId: null,
       openingBalance: null,
       drcr: "",
-      unregister: "",
+      unregistered: "",
       gstNo: "",
-      fssiNo: "",
+      fssaiNo: "",
       stateCode: "",
       bankAccountCode: "",
       bankName: "",
@@ -165,6 +186,37 @@ const AccountMasterForm = ({ data }) => {
   });
 
   const colors = useColors();
+
+  useEffect(() => {
+    const fetchGroupMasterData = async () => {
+      try {
+       // console.log("inside");
+        const response = await getAllGroupMasterData();
+        //console.log("hii", response.data);
+        setGroupMasterData(response.data);
+        if (response.data.length > 0) {
+          setSelectedGroupId(response.data[0].id);
+          setSelectedGroupName(response.data[0].groupName);
+          //console.log(response.data[0].groupName)
+        }
+      } catch (error) {
+        console.error("Failed to fetch group data:", error);
+      }
+    };
+    fetchGroupMasterData();
+  }, []);
+
+  const handleGroupChange = (event) => {
+    const selectedOptionId = event.target.value;
+    const selectedOption = groupMasterData.find(
+      (group) => group.id === selectedOptionId
+    );
+
+    if (selectedOption) {
+      setSelectedGroupId(selectedOption.id);
+      setSelectedGroupName(selectedOption.groupName);
+    }
+  };
 
   return (
     <>
@@ -289,19 +341,41 @@ const AccountMasterForm = ({ data }) => {
                     //InputLabelProps={{ shrink: length > 0 ? true : false }}
                   />
                 </Grid>
+
                 <Grid xs={12} sm={3} item>
-                  <TextField
-                    placeholder="Enter Group Id"
-                    label="Group Id"
-                    disabled={isDisabled}
-                    variant="outlined"
-                    name="groupId"
-                    value={accountData.groupId ?? ""}
-                    onChange={handleInputData}
-                    //InputLabelProps={{ shrink: length > 0 ? true : false }}
-                    fullWidth
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel
                     required
-                  />
+                      id="groupId-label"
+                      shrink={
+                        groupMasterData.length > 0 || selectedGroupId
+                          ? true
+                          : false
+                      }
+                    >
+                      Group Id
+                    </InputLabel>
+                    {selectedGroupId && (
+                      <Select
+                        labelId="groupId-label"
+                        id="groupId"
+                        label="Group Id"
+                        disabled={isDisabled}
+                        variant="outlined"
+                        //onChange={handleInputData}
+                        value={selectedGroupId}
+                        {...console.log(selectedGroupId)}
+                        onChange={handleGroupChange}
+                      >
+                      
+                        {groupMasterData.map((group) => (
+                          <MenuItem key={group.id} value={group.id}>
+                            {group.groupName}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  </FormControl>
                 </Grid>
                 <Grid xs={12} sm={3} item>
                   <TextField
@@ -313,7 +387,7 @@ const AccountMasterForm = ({ data }) => {
                     name="openingBalance"
                     value={accountData.openingBalance ?? ""}
                     fullWidth
-                   // InputLabelProps={{ shrink: length > 0 ? true : false }}
+                    // InputLabelProps={{ shrink: length > 0 ? true : false }}
                   />
                 </Grid>
                 <Grid xs={12} sm={3} item>
@@ -335,8 +409,8 @@ const AccountMasterForm = ({ data }) => {
                     disabled={isDisabled}
                     variant="outlined"
                     onChange={handleInputData}
-                    name="unregister"
-                    value={accountData.unregister || ""}
+                    name="unregistered"
+                    value={accountData.unregistered || ""}
                     fullWidth
                   />
                 </Grid>
@@ -359,8 +433,8 @@ const AccountMasterForm = ({ data }) => {
                     disabled={isDisabled}
                     variant="outlined"
                     onChange={handleInputData}
-                    name="fssiNo"
-                    value={accountData.fssiNo || ""}
+                    name="fssaiNo"
+                    value={accountData.fssaiNo || ""}
                     fullWidth
                   />
                 </Grid>
@@ -374,6 +448,7 @@ const AccountMasterForm = ({ data }) => {
                     name="stateCode"
                     value={accountData.stateCode || ""}
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid xs={12} sm={3} item>

@@ -9,62 +9,62 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import { getAllScriptMasterData } from "../../api/scriptMaster/scriptMaster.request";
-import ScriptMasterForm from "./scriptMasterForm";
+import { getAllGstRateMasterData } from "../../api/gstRateMaster/gstRateMaster.request";
+import GstRateMasterForm from "./gstRateMasterForm";
 import CustomIconButton from "../../components/Buttons/CustomIconButton";
 import { Search } from "@mui/icons-material";
-import {useIds} from "../IdsContext/IdsContext";
+import {useIds} from "../IdsContext/IdsContext"
 
-const ScriptMasterRecords = () => {
-  const {ids,setIds} = useIds();
-  const [scriptMasterData, setScriptMasterData] = useState([]);
+const GstRateMasterRecords = () => {
+  const { ids, setIds } = useIds();
+
+  const [gstRateMasterData, setGstRateMasterData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [redirectToScriptMasterForm, setRedirectToScriptMasterForm] =
+  const [redirectToGstRateMasterForm, setRedirectToGstRateMasterForm] =
     useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
   useEffect(() => {
-    const fetchScriptMasterData = async () => {
+    const fetchGstRateMasterData = async () => {
       try {
-        const response = await getAllScriptMasterData();
-        setScriptMasterData(response.data);
+        const response = await getAllGstRateMasterData();
+        console.log(response.data);
+        setGstRateMasterData(response.data);
       } catch (error) {
-        console.error("Failed to fetch Script data:", error);
+        console.error("Failed to fetch gstRate data:", error);
       }
     };
-    fetchScriptMasterData();
+    fetchGstRateMasterData();
   }, []);
 
   const handleSearch = () => {
     if (searchQuery) {
-      const filteredData = scriptMasterData.filter((data) =>
-        data.scriptName.toLowerCase().includes(searchQuery.toLowerCase())
+      const filteredData = gstRateMasterData.filter((data) =>
+        data.gstName.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setScriptMasterData(filteredData);
+      setGstRateMasterData(filteredData);
     } else {
-      setScriptMasterData(scriptMasterData);
+      setGstRateMasterData(gstRateMasterData);
     }
   };
-  const handleClick = (scriptMaster) => {
-   
-    const scriptMasterId = scriptMaster.id;
-    setIds((prev) => ({ ...prev, scriptMasterId }));
-    setRedirectToScriptMasterForm(true);
-    setSelectedData(scriptMaster);
+
+  const handleClick = (gstRate) => {
+    console.log(gstRate);
+    const gstRateMasterId = gstRate.id
+    setIds(prev => ({...prev , gstRateMasterId}))
+    setRedirectToGstRateMasterForm(true);
+    setSelectedData(gstRate);
+    //console.log(setSelectedData(data));
   };
 
   const handleAddClick = () => {
-      setRedirectToScriptMasterForm(true);
+    setRedirectToGstRateMasterForm(true);
   };
 
-
- 
-
-  if (redirectToScriptMasterForm) {
-    console.log("selectedData",selectedData);
-    return <ScriptMasterForm data={selectedData} />;
-  
+  if (redirectToGstRateMasterForm) {
+    return <GstRateMasterForm data={selectedData} />;
   }
+
   return (
     <Box
       sx={{
@@ -83,7 +83,7 @@ const ScriptMasterRecords = () => {
         }}
         variant="h4"
       >
-        ScriptMaster Records
+        GstRateMaster Records
       </Typography>
       <Box
         sx={{
@@ -119,7 +119,7 @@ const ScriptMasterRecords = () => {
           <TextField
             id="search-bar"
             className="text"
-            label="Enter a Script name"
+            label="Enter a Gst name"
             variant="outlined"
             placeholder="Search..."
             value={searchQuery}
@@ -142,19 +142,19 @@ const ScriptMasterRecords = () => {
         <TableHead>
           <TableRow>
             <TableCell style={{ fontWeight: "bold" }}>id</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>scriptName</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>scriptType</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>lotSize</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>faceValue</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>scriptId</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>isinNo</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>gstName</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>rate</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>cGstRate</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>sGstRate</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>iGstRate</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>companyCode</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>createdBy</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>modifiedBy</TableCell>
           </TableRow>
         </TableHead>
 
         <tbody>
-          {scriptMasterData.map((data) => (
+          {gstRateMasterData.map((data) => (
             <TableRow
               key={data.id}
               onClick={() => {
@@ -163,12 +163,12 @@ const ScriptMasterRecords = () => {
               sx={{ cursor: "pointer" }}
             >
               <TableCell>{data.id}</TableCell>
-              <TableCell>{data.scriptName}</TableCell>
-              <TableCell>{data.scriptType}</TableCell>
-              <TableCell>{data.lotSize}</TableCell>
-              <TableCell>{data.facevalue}</TableCell>
-              <TableCell>{data.scriptId}</TableCell>
-              <TableCell>{data.isinNo}</TableCell>
+              <TableCell>{data.gstName}</TableCell>
+              <TableCell>{data.rate}</TableCell>
+              <TableCell>{data.cGstRate}</TableCell>
+              <TableCell>{data.sGstRate}</TableCell>
+              <TableCell>{data.iGstRate}</TableCell>
+              <TableCell>{data.companyCode}</TableCell>
               <TableCell>{data.createdBy}</TableCell>
               <TableCell>{data.modifiedBy}</TableCell>
             </TableRow>
@@ -176,9 +176,9 @@ const ScriptMasterRecords = () => {
         </tbody>
       </Table>
 
-      {/* {redirectToscriptForm && <scriptForm />} */}
+      {/* {redirectToCompanyForm && <CompanyForm />} */}
     </Box>
   );
 };
 
-export default ScriptMasterRecords;
+export default GstRateMasterRecords;

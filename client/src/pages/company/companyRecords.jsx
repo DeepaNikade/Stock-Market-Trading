@@ -32,23 +32,27 @@ const CompanyRecords = () => {
     fetchCompanyData();
   }, []);
 
-  const handleSearch = () => {
-    const filteredData = searchQuery
-      ? companyData.filter((data) =>
-          data.companyName.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      : companyData;
+  const handleSearch = () => { if (searchQuery) {
+    const filteredData = companyData.filter((data) =>
+      data.companyName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     setCompanyData(filteredData);
-  };
+  } else {
+    setCompanyData(companyData);
+  }
+};
 
-  const handleClick = (e) => {
-    setRedirectToCompanyForm(true);
-    setSelectedData(e);
+const handleClick = (e) => {
+  console.log(e);
+  setRedirectToCompanyForm(true);
+  setSelectedData(e);
+  //console.log(setSelectedData(data));
   };
 
   if (redirectToCompanyForm) {
     return <CompanyForm data={selectedData} />;
   }
+
   return (
     <Box
       sx={{
@@ -134,7 +138,7 @@ const CompanyRecords = () => {
             <TableCell style={{ fontWeight: "bold" }}>panNo</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>createdBy</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>modifiedBy</TableCell>
-            <TableCell style={{ fontWeight: "bold" }}>fssiNo</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>fssaiNo</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>signPath</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>logoPath</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>stateCode</TableCell>
@@ -147,7 +151,6 @@ const CompanyRecords = () => {
               key={data.id}
               onClick={() => {
                 handleClick(data);
-               
               }}
               sx={{ cursor: "pointer" }}
             >
@@ -160,7 +163,7 @@ const CompanyRecords = () => {
               <TableCell>{data.panNo}</TableCell>
               <TableCell>{data.createdBy}</TableCell>
               <TableCell>{data.modifiedBy}</TableCell>
-              <TableCell>{data.fssiNo}</TableCell>
+              <TableCell>{data.fssaiNo}</TableCell>
               <TableCell>{data.signPath}</TableCell>
               <TableCell>{data.logoPath}</TableCell>
               <TableCell>{data.stateCode}</TableCell>

@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import {
   // ACCOUNT MASTER
   insertIntoAccountMaster,
@@ -189,6 +190,7 @@ export async function insertAccountMaster(req, res) {
     const accountMasterDataQuery = await insertIntoAccountMaster(value);
     return sendResponse(res, 200, accountMasterDataQuery);
   } catch (err) {
+    console.log(err);
     sendResponse(res, 500, err);
   }
 }
@@ -200,14 +202,11 @@ export async function updateAccountMaster(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const accountMasterDataQuery = await updateIntoAccountMaster(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, accountMasterDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const accountMasterDataQuery = await updateIntoAccountMaster(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, accountMasterDataQuery);
   } catch (err) {
     sendResponse(res, 500, err);
   }
@@ -278,14 +277,11 @@ export async function updateCompany(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const companyDataQuery = await updateIntoCompany(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, companyDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const companyDataQuery = await updateIntoCompany(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, companyDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -353,14 +349,11 @@ export async function updateIntoExpiryMaster(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const expiryMasterDataQuery = await updateExpiryMaster(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, expiryMasterDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const expiryMasterDataQuery = await updateExpiryMaster(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, expiryMasterDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -429,14 +422,11 @@ export async function updateGroupMaster(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const groupMasterDataQuery = await updateIntoGroupMaster(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, groupMasterDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const groupMasterDataQuery = await updateIntoGroupMaster(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, groupMasterDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -504,14 +494,11 @@ export async function updateItemMaster(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const itemMasterDataQuery = await updateIntoItemMaster(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, itemMasterDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const itemMasterDataQuery = await updateIntoItemMaster(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, itemMasterDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -579,14 +566,11 @@ export async function updateGstRateMaster(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const gstRateMasterDataQuery = await updateIntoGstRateMaster(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, gstRateMasterDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const gstRateMasterDataQuery = await updateIntoGstRateMaster(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, gstRateMasterDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -653,14 +637,11 @@ export async function updateScriptMaster(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const scriptMasterDataQuery = await updateIntoScriptMaster(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, scriptMasterDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const scriptMasterDataQuery = await updateIntoScriptMaster(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, scriptMasterDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -728,14 +709,11 @@ export async function updateStateMaster(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const stateMasterDataQuery = await updateIntoStateMaster(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, stateMasterDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const stateMasterDataQuery = await updateIntoStateMaster(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, stateMasterDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -802,14 +780,11 @@ export async function updateUserForms(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const userFormsDataQuery = await updateIntoUserForms(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, userFormsDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const userFormsDataQuery = await updateIntoUserForms(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, userFormsDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -877,14 +852,11 @@ export async function updateUsers(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const usersDataQuery = await updateIntoUsers(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, usersDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const usersDataQuery = await updateIntoUsers(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, usersDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -924,7 +896,7 @@ export async function getUsers(req, res) {
 }
 export async function getAllUsers(req, res) {
   try {
-    const allUsersDataQuery = await getAllDataFromUsers();
+    const allUsersDataQuery = await getDataFromUsers();
     return sendResponse(res, 200, allUsersDataQuery);
   } catch (err) {
     sendResponse(res, 500, err);
@@ -952,17 +924,14 @@ export async function updateEquitySalePurchase(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const equitySalePurchaseDataQuery = await updateIntoEquitySalePurchase(
-        value,
-        {
-          where: { id: value.id },
-          returning: true,
-        }
-      );
-      return sendResponse(res, 200, equitySalePurchaseDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const equitySalePurchaseDataQuery = await updateIntoEquitySalePurchase(
+      value,
+      {
+        where: { id: value.id },
+        returning: true,
+      }
+    );
+    return sendResponse(res, 200, equitySalePurchaseDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -1033,14 +1002,11 @@ export async function updateYearMaster(req, res) {
     return sendResponse(res, 422, error);
   }
   try {
-    if (!req.body.createdBy) {
-      const yearMasterDataQuery = await updateIntoYearMaster(value, {
-        where: { id: value.id },
-        returning: true,
-      });
-      return sendResponse(res, 200, yearMasterDataQuery);
-    }
-    return sendResponse(res, 500, { message: "createdBy cannot be updated" });
+    const yearMasterDataQuery = await updateIntoYearMaster(value, {
+      where: { id: value.id },
+      returning: true,
+    });
+    return sendResponse(res, 200, yearMasterDataQuery);
   } catch (error) {
     sendResponse(res, 500, err);
   }
@@ -1104,7 +1070,7 @@ export async function insertTransactionHeadDetails(req, res) {
       details.map((d) => {
         const data = insertIntoTransactionDetails({
           ...d,
-          tran_id: transactionHeadData.id,
+          tranId: transactionHeadData.id,
         });
         return data;
       })
@@ -1135,7 +1101,7 @@ export async function getTransactionHeadDetails(req, res) {
     }
     if (!details) {
       const getTransactionDetailsData = await getDataFromTransactionDetails({
-        where: { tran_id: head.id },
+        where: { tranId: head.id },
         returning: true,
       });
       apiResponse = { ...apiResponse, getTransactionDetailsData };
@@ -1168,6 +1134,7 @@ export async function updateTransactionHeadDetails(req, res) {
           returning: true,
         }
       );
+      // console.log(updateTransactionHeadData);
       apiResponse = { ...apiResponse, updateTransactionHeadData };
     }
 
@@ -1213,6 +1180,7 @@ export async function updateTransactionHeadDetails(req, res) {
     sendResponse(res, 200, { message: "success", data: apiResponse });
   } catch (err) {
     sendResponse(res, 500, err);
+    // console.log(err);
   }
 }
 
