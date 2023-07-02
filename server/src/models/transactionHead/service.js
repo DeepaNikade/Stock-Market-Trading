@@ -5,6 +5,10 @@ export async function getDataFromTransactionHead(query = { where: {} }) {
   let output = await transactionHead.findAll(query);
   return processQueryOutput.forFindAll(output);
 }
+export async function getAllDataFromTransactionHead(query = { where: {} }) {
+  let output = await transactionHead.findAll(query);
+  return processQueryOutput.forFindAll(output);
+}
 
 export async function updateTransactionHeadByQuery(set, query = { where: {} }) {
   let [rows, data] = await transactionHead.update(set, query);

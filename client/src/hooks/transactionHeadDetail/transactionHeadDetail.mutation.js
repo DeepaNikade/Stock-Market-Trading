@@ -1,14 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import {
-  deleteItemMasterData,
-  insertItemMasterData,
-  updateItemMasterData,
-} from "../../api/itemMaster/itemMaster.request";
+  deleteTransactionHeadDetailsData,
+  insertTransactionHeadDetailsData,
+  updateTransactionHeadDetailsData,
+} from "../../api/transactionHeadDetail/transactionHeadDetail.request";
 
-export const useInsertIntoItemMasterData = () => {
+export const useInsertIntoTransactionHeadDetailsData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await insertItemMasterData(data);
+      const res = await insertTransactionHeadDetailsData(data);
       return res;
     },
     onSuccess: (data) => {
@@ -16,16 +16,18 @@ export const useInsertIntoItemMasterData = () => {
       alert("Inserted Sucessfully 👍👍");
     },
     onError: (error) => {
-      alert("ItemMaster Insertion Failed 👎👎");
+      alert(
+        "TransactionHeadDetail Insertion Failed 👎👎, Please Insert all the requried Fields."
+      );
       console.log(error);
       return error;
     },
   });
 };
-export const useUpdateIntoItemMasterData = () => {
+export const useUpdateIntoTransactionHeadDetailsData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await updateItemMasterData(data);
+      const res = await updateTransactionHeadDetailsData(data);
       return res;
     },
     onSuccess: (data) => {
@@ -33,16 +35,16 @@ export const useUpdateIntoItemMasterData = () => {
       alert("Updated Sucessfully 👍👍");
     },
     onError: (error) => {
-      alert("ItemMaster Updation Failed 👎👎");
+      alert("TransactionHeadDetails Updation Failed 👎👎");
       console.log(error);
       return error;
     },
   });
 };
-export const useDeleteIntoItemMasterData = () => {
+export const useDeleteIntoTransactionHeadDetailsData = () => {
   return useMutation({
     mutationFn: async (data) => {
-      const res = await deleteItemMasterData(data);
+      const res = await deleteTransactionHeadDetailsData(data);
       return res;
     },
     onSuccess: (data) => {
@@ -50,8 +52,7 @@ export const useDeleteIntoItemMasterData = () => {
       alert("Deleted Sucessfully 👍👍");
     },
     onError: (error) => {
-      const err = error.response.data.message;
-      alert(`"ItemMaster Deletion Failed: ", ${err}`);
+      alert("transactionHeadDetails Deletion Failed 👎👎");
       console.log(error);
       return error;
     },

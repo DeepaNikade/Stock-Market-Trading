@@ -15,11 +15,16 @@ import GstRateMasterForm from "../pages/gstRateMaster/gstRateMasterForm";
 import GstRateMasterRecords from "../pages/gstRateMaster/gstRateMasterRecords";
 import ExpiryMasterForm from "../pages/expiryMaster/expiryMasterForm";
 import ExpiryMasterRecords from "../pages/expiryMaster/expiryMasterRecords";
-import ScriptMasterForm from "../pages/scriptMaster/ScriptMasterForm";
+import ScriptMasterForm from "../pages/scriptMaster/scriptMasterForm";
 import ScriptMasterRecords from "../pages/scriptMaster/scriptMasterRecord";
 import EquitySalePurchaseForm from "../pages/equitySalePurchase/equitySalePurchaseForm";
 import EquitySalePurchaseRecords from "../pages/equitySalePurchase/equitySalePurchaseRecords";
-
+import TransactionForm from "../pages/transactionHeadDetail/transactionHeadDetailForm";
+import EquityPurchaseRegisterReport from "../pages/reports/equityPurschaseRegisterReport";
+import EquitySaleRegisterReport from "../pages/reports/equitySaleRegisterReport";
+import EquityReport from "../pages/reports/equityReport";
+import FutureOptionReport from "../pages/reports/futureOptionReport";
+import CommoditiesReport from "../pages/reports/commoditiesReport";
 export const UsersRoutes = () => {
   return (
     <Routes>
@@ -43,6 +48,12 @@ export const UsersRoutes = () => {
       <Route path="/scriptMasterRecord" element={<ScriptMasterRecords />} />
       <Route path="/equitySalePurchaseForm" element={<EquitySalePurchaseForm />} />
       <Route path="/equitySalePurchaseRecords" element={<EquitySalePurchaseRecords />} />
+      <Route path="/transactionHeadDetailsForm" element={<TransactionForm />} />
+      <Route path="/equityPurchaseRegisterReport" element={<EquityPurchaseRegisterReport />} />
+      <Route path="/equitySaleRegisterReport" element={<EquitySaleRegisterReport />} />
+      <Route path="/equityReport" element={<EquityReport />} />
+      <Route path="/futureOptionReport" element={<FutureOptionReport />} />
+      <Route path="/commoditiesReport" element={<CommoditiesReport />} />
 
 
 

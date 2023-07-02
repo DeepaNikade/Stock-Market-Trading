@@ -90,6 +90,7 @@ import {
   updateTransactionHeadDetails,
   deleteTransactionHeadDetails,
   getTransactionHeadDetails,
+  getAllTransactionHeadDetails,
 } from "../controller/user.controller.js";
 
 const router = Router();
@@ -183,6 +184,7 @@ router.post("/transactionHeadDetails", insertTransactionHeadDetails);
 router.patch("/transactionHeadDetails", updateTransactionHeadDetails);
 router.post("/transactionHeadDetails/delete", deleteTransactionHeadDetails);
 router.get("/transactionHeadDetails", getTransactionHeadDetails);
+router.get("/transactionHeadDetails/all", getAllTransactionHeadDetails);
 // router.get("/transactionHeadDetails/all",get)
 
 export default router;

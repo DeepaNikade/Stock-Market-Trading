@@ -166,7 +166,7 @@ const ScriptMasterRecords = () => {
               <TableCell>{data.scriptName}</TableCell>
               <TableCell>{data.scriptType}</TableCell>
               <TableCell>{data.lotSize}</TableCell>
-              <TableCell>{data.facevalue}</TableCell>
+              <TableCell>{data.faceValue}</TableCell>
               <TableCell>{data.scriptId}</TableCell>
               <TableCell>{data.isinNo}</TableCell>
               <TableCell>{data.createdBy}</TableCell>

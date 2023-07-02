@@ -52,7 +52,8 @@ export const useDeleteIntoScriptMasterData = () => {
       alert("Deleted Sucessfully");
     },
     onError: (error) => {
-      alert("ScriptMaster Deletion Failed");
+      const err = error.response.data.message;
+      alert(`"ScriptMaster Deletion Failed: ", ${err}`);
       console.log(error);
       return error;
     },

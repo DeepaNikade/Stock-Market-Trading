@@ -132,9 +132,9 @@ console.log(insertItemMasterData);
   gstCode: itemMasterData.gstCode,
   isService: itemMasterData.isService,
   purchaseAccount: itemMasterData.purchaseAccount,
-  pa: itemMasterData.pa,
+  pa: selectedAccountId,
   sellAccount: itemMasterData.sellAccount,
-  sa: itemMasterData.sa,
+  sa: selectedAccountId,
   companyCode: itemMasterData.companyCode,
   modifiedBy:itemMasterData.modifiedBy 
   }
@@ -245,7 +245,7 @@ console.log(insertItemMasterData);
       {redirectToItemMasterRecords ? (
         <ItemMasterRecords />
       ) : (
-        <>
+        <> 
           <MenuBar />
           <Box
             sx={{

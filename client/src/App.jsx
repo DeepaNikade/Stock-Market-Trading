@@ -2,7 +2,7 @@ import { Container, CssBaseline, ThemeProvider } from "@mui/material";
 import "./App.css";
 import { UsersRoutes } from "./routes/UsersRoutes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import UserTheme from "./hoc/ThemeProvider";
+import UserTheme from "./hoc/themeProvider";
 
 import { AuthRoutes } from "./routes/AuthRoutes";
 import IdsProvider from "./pages/IdsContext/IdsContext";

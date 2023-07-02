@@ -142,13 +142,13 @@ export default function LoginIn() {
                 Submit
               </Button>
 
-              <Grid container>
+              {/* <Grid container>
                 <Grid item xs>
                   <Link href="forgotPassword" variant="body1">
                     Forgot password?
                   </Link>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Box>
           </Box>
         </Card>

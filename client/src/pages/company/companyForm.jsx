@@ -1,10 +1,7 @@
 import { Grid, TextField, Button, Typography, Box } from "@mui/material";
 import {
   ArrowBack,
-  KeyboardArrowLeft,
-  KeyboardArrowRight,
-  KeyboardDoubleArrowLeft,
-  KeyboardDoubleArrowRight,
+  
 } from "@mui/icons-material";
 import React, { useState } from "react";
 import {
@@ -110,52 +107,12 @@ console.log("updcopmut : ",updateCompanyMutation)
     
     
   const deleteCompanyMutation = useDeleteIntoCompanyData();
-
-  async function checkIfCompanyInUse(companyId) {
-    try {
-      const accountMasterData = await getAccountMasterData(companyId);
-      console.log("accountMasterData", accountMasterData);
-      return accountMasterData.length > 0;
-    } catch (error) {
-      console.error("Failed to fetch accountMaster data:", error);
-      return false;
-    }
-  }
-
-  async function checkIfCompanyInUseInGroupMaster(companyId) {
-    try {
-      const groupMasterData = await getGroupMasterData(companyId);
-      console.log("groupMasterData", groupMasterData);
-      return groupMasterData.length > 0;
-    } catch (error) {
-      console.error("Failed to fetch groupMaster data:", error);
-      return false;
-    }
-  }
-
-  async function handleDeleteCompanyData() {
-    try {
-      const isCompanyInUse = checkIfCompanyInUse(companyId);
-      console.log("isCompanyInUse", isCompanyInUse);
-
-      if (isCompanyInUse) {
-        alert(
-          "Cannot delete the company. It is associated with accountMaster."
-        );
-        return;
-      }
-
-      const isCompanyInUseInGroupMaster =checkIfCompanyInUseInGroupMaster(companyId);
-      console.log("isCompanyInUseInGroupMaster", isCompanyInUseInGroupMaster);
-
-      if (isCompanyInUseInGroupMaster) {
-        alert("Cannot delete the company. It is associated with groupMaster.");
-        return;
-      }
-
-      await deleteCompanyMutation.mutateAsync({ id: companyId });
+  function handleDeleteCompanyData() {
+    console.log("companyId",companyId);
+     deleteCompanyMutation.mutate({ id:companyId });
       setCompanyId(null);
       setCompanyData({
+        id:"", 
         companyName: "",
         city: "",
         state: "",
@@ -169,10 +126,8 @@ console.log("updcopmut : ",updateCompanyMutation)
         logoPath: "",
         stateCode: "",
       });
-    } catch (error) {
-      console.error("Failed to delete company:", error);
-    }
-  }
+
+  }  
 
   const [manageButton, setManageButton] = useState({
     create: false,
@@ -514,7 +469,7 @@ console.log("updcopmut : ",updateCompanyMutation)
                 </Button>
               </Box>
 
-              <Box display="flex" gap={2}>
+              {/* <Box display="flex" gap={2}>
                 <CustomIconButton
                   onClick={() => {}}
                   description={"Go To First"}
@@ -545,7 +500,7 @@ console.log("updcopmut : ",updateCompanyMutation)
                 >
                   <KeyboardDoubleArrowRight sx={{ fontSize: "28px" }} />
                 </CustomIconButton>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
         </>

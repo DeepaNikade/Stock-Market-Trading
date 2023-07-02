@@ -1,5 +1,7 @@
 import { React, useState } from "react";
-import { Grid, TextField, Button, Typography, Box } from "@mui/material";
+import { Grid, TextField, Button, Typography, Box,FormControl, InputLabel,
+  Select,
+  MenuItem, } from "@mui/material";
 import {
   ArrowBack,
   KeyboardArrowLeft,
@@ -205,7 +207,7 @@ const ScriptMasterForm = (data) => {
                     required
                   />
                 </Grid>
-                <Grid xs={12} sm={4} item>
+                {/* <Grid xs={12} sm={4} item>
                   <TextField
                     placeholder="Enter script Type"
                     label="script Type"
@@ -217,7 +219,40 @@ const ScriptMasterForm = (data) => {
                     fullWidth
                     required
                   />
-                </Grid>
+                </Grid> */}
+                <Grid item xs={12} sm={4}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel
+                  required
+                  id="scriptType"
+                 
+                >
+                  Script Type
+                </InputLabel>
+                <Select
+                  labelId="ScriptType"
+                  name="scriptType"
+                  label="ScriptType"
+                  disabled={isDisabled}
+                  variant="outlined"
+                  value={scriptMasterData.scriptType}
+                  onChange={handleInputData}
+                >
+                  <MenuItem value={"F"}>
+                    F&O
+                    </MenuItem>
+                    <MenuItem value={"E"}>
+                    EQUITY
+                    </MenuItem>
+                    <MenuItem value={"C"}>
+                    commodities
+                    </MenuItem>
+                   
+                     
+                </Select>
+              </FormControl>
+            </Grid>
+
                 <Grid xs={12} sm={4} item>
                   <TextField
                     placeholder="Enter lot Size"

@@ -46,6 +46,7 @@ export const useDeleteIntoCompanyData = () => {
   return useMutation({
     mutationFn: async (data) => {
       const res = await deleteCompanyData(data);
+      console.log("res",res);
       return res;
     },
     onSuccess: (data) => {
@@ -53,7 +54,8 @@ export const useDeleteIntoCompanyData = () => {
       alert("Deleted Sucessfully 👍👍");
     },
     onError: (error) => {
-      alert("Company Deletion Failed 👎👎");
+      const err = error.response.data.message;
+      alert(`"Company Deletion Failed : ",${err}`);
       console.log(error);
       return error;
     },

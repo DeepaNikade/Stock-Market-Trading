@@ -12,7 +12,7 @@ export const updateAccountMasterData = async (data) => {
   return await api.patch("/user/accountMaster", data);
 };
 export const getAccountMasterData = async (data) => {
-  return await api.get("/user/accounMaster", data);
+  return await api.get("/user/accountMaster", data);
 };
 export const getAllAccountMasterData = async () => {
   return await api.get("/user/accountMaster/all");

@@ -46,7 +46,8 @@ export const useDeleteIntoAccountMasterData = () => {
       alert("Deleted Sucessfully 👍👍");
     },
     onError: (error) => {
-      alert("AccountMaster Deletion Failed 👎👎");
+      const err = error.response.data.message;
+      alert(`"AccountMaster Deletion Failed: ", ${err}`);
       console.log(error);
       return error;
     },

@@ -41,7 +41,7 @@ const MenuBar = () => {
     <AppBar position="fixed">
       <Toolbar
         sx={{
-          bgcolor: colors.card,
+          bgcolor: colors.primary[100],
           display: "flex",
           justifyContent: "space-evenly",
         }}
@@ -49,7 +49,7 @@ const MenuBar = () => {
 
         <Typography
           variant="h6"
-          sx={{ cursor: "pointer", color: "black" }}
+          sx={{ cursor: "pointer", color: "white" }}
           onClick={(event) => handleMenuClick(event, "company")}
         >
           Company
@@ -86,7 +86,7 @@ const MenuBar = () => {
 
         <Typography
           variant="h6"
-          sx={{ cursor: "pointer", color: "black" }}
+          sx={{ cursor: "pointer", color: "white" }}
           onClick={(event) => handleMenuClick(event, "master")}
         >
           Master
@@ -153,7 +153,7 @@ const MenuBar = () => {
         
         <Typography
           variant="h6"
-          sx={{ cursor: "pointer", color: "black" }}
+          sx={{ cursor: "pointer", color: "white" }}
           onClick={(event) => handleMenuClick(event, "transaction")}
         >
           Transaction
@@ -180,21 +180,17 @@ const MenuBar = () => {
             }}
           >
             <MenuItem>
-              <Link to="/transactionHead" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>Transaction Head</InputLabel>
+              <Link to="/transactionHeadDetailsForm" style={{textDecoration:"none"}}>
+                <InputLabel sx={{ color: "black" }}>Transaction HeadDetail</InputLabel>
               </Link>
             </MenuItem>
-            <MenuItem>
-              <Link to="/transactionDetail" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>Transaction Detail</InputLabel>
-              </Link>
-            </MenuItem>
+            
           </Box>
         </Popover>
 
         <Typography
           variant="h6"
-          sx={{ cursor: "pointer", color: "black" }}
+          sx={{ cursor: "pointer", color: "white" }}
           onClick={(event) => handleMenuClick(event, "outward")}
         >
           Outward
@@ -266,7 +262,7 @@ const MenuBar = () => {
 
         <Typography
           variant="h6"
-          sx={{ cursor: "pointer", color: "black" }}
+          sx={{ cursor: "pointer", color: "white" }}
           onClick={(event) => handleMenuClick(event, "report")}
         >
           Reports
@@ -293,114 +289,41 @@ const MenuBar = () => {
             }}
           >
             <MenuItem>
-              <Link to="/bankBookForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>Cash/BankBook</InputLabel>
+              <Link to="/equityPurchaseRegisterReport" style={{textDecoration:"none"}}>
+                <InputLabel sx={{ color: "black" }}>EquityPurchaseRegister Report</InputLabel>
               </Link>
             </MenuItem>
             <MenuItem>
-              <Link to="/ledgerForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>Ledger</InputLabel>
+              <Link to="/equitySaleRegisterReport" style={{textDecoration:"none"}}>
+                <InputLabel sx={{ color: "black" }}>EquitySaleRegister Report</InputLabel>
               </Link>
             </MenuItem>
             <MenuItem>
-              <Link to="/registerForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>Register</InputLabel>
+              <Link to="/equityReport" style={{textDecoration:"none"}}>
+                <InputLabel sx={{ color: "black" }}>Equity Report</InputLabel>
               </Link>
             </MenuItem>
             <MenuItem>
-              <Link to="/journalVoucherForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>
-                  Journal Voucher Register
-                </InputLabel>
+              <Link to="/futureOptionReport" style={{textDecoration:"none"}}>
+                <InputLabel sx={{ color: "black" }}>Future&Option Report</InputLabel>
               </Link>
             </MenuItem>
             <MenuItem>
-              <Link to="/gstUtilityForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>GstUtility</InputLabel>
+              <Link to="/commoditiesReport" style={{textDecoration:"none"}}>
+                <InputLabel sx={{ color: "black" }}>Commodities</InputLabel>
               </Link>
             </MenuItem>
-            <MenuItem>
-              <Link to="/trailBalanceForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>Trial Balance</InputLabel>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link to="/tradingForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>
-                  Trading/ProfitLoss
-                </InputLabel>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link to="/balanceSheetForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>Balance Sheet</InputLabel>
-              </Link>
-            </MenuItem>
+            
           </Box>
         </Popover>
 
-        <Typography
-          variant="h6"
-          sx={{ cursor: "pointer", color: "black" }}
-          onClick={(event) => handleMenuClick(event, "utility")}
-        >
-          Utility
-        </Typography>
-        <Popover
-          open={menuState.utility.openPopover}
-          anchorEl={menuState.utility.anchorEl}
-          onClose={() => handleMenuClose("utility")}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              p: 2,
-              bgcolor: "white",
-            }}
-          >
-            <MenuItem>
-              <Link to="/backUpForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>BackUp Database</InputLabel>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link to="/invoiceUtilityForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>Invoice Utility</InputLabel>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link to="/companyParameterForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>
-                  Company Parameter
-                </InputLabel>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link to="/userManagementForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>User Management</InputLabel>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link to="/gstParameterSettingForm" style={{textDecoration:"none"}}>
-                <InputLabel sx={{ color: "black" }}>
-                  GstParameterSetting
-                </InputLabel>
-              </Link>
-            </MenuItem>
-          </Box>
-        </Popover>
+        
 
         <Typography variant="h6" sx={{ cursor: "pointer", color: "black" }}>
-          Logout
+          
+          <Link to="/Login" style={{textDecoration:"none",color:"white"}}>
+              Logout
+            </Link>
         </Typography>
       </Toolbar>
     </AppBar>

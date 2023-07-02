@@ -154,11 +154,11 @@ const CompanySelection = () => {
               Select
             </Button>
           </Box>
-          <Box>
+          {/* <Box>
             <Button color="red" variant="contained">
               Exit
             </Button>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
 

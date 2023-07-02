@@ -88,12 +88,14 @@ import {
   getDataFromTransactionHead,
   updateTransactionHeadByQuery,
   deleteTransactionHeadByQuery,
+  getAllDataFromTransactionHead,
 
   // TRANSACTION DETAILS
   insertIntoTransactionDetails,
   getDataFromTransactionDetails,
   updateTransactionDetailsByQuery,
   deleteTransactionDetailsByQuery,
+  getAllDataFromTransactionDetails,
 } from "../models/index.js";
 
 import { validateReq } from "../utils/index.js";
@@ -1107,6 +1109,23 @@ export async function getTransactionHeadDetails(req, res) {
       apiResponse = { ...apiResponse, getTransactionDetailsData };
     }
 
+    sendResponse(res, 200, apiResponse);
+  } catch (err) {
+    console.log(err);
+    sendResponse(res, 500, err);
+  }
+}
+
+export async function getAllTransactionHeadDetails(req, res) {
+  let apiResponse = {};
+  try {
+    const getTransactionHeadData = await getAllDataFromTransactionHead();
+    const getTransactionDetailsData = await getAllDataFromTransactionDetails();
+    apiResponse = {
+      ...apiResponse,
+      getTransactionHeadData,
+      getTransactionDetailsData,
+    };
     sendResponse(res, 200, apiResponse);
   } catch (err) {
     console.log(err);
